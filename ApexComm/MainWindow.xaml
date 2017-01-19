@@ -1,0 +1,46 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ApexComm"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:WpfControlS="clr-namespace:WpfControlS;assembly=WpfControlS" x:Class="ApexComm.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1000" WindowStartupLocation="CenterScreen">
+    <xctk:BusyIndicator x:Name="busywait" BusyContent="搜索中...">
+
+        <Grid ShowGridLines="True" x:Name="gird主框架">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1" ShowGridLines="True" x:Name="gird下半部分">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="300" />
+                </Grid.ColumnDefinitions>
+
+                <Grid ShowGridLines="True" Height="612" Width="694" x:Name="grid_left">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="89*" />
+                        <RowDefinition Height="523*" />
+                    </Grid.RowDefinitions>
+                    <ListView x:Name="listView" SelectionMode="Single"
+                              Grid.Row="1" View="{DynamicResource mygridview}" ItemContainerStyle="{DynamicResource ListViewItemStyle}" MouseDoubleClick="listView_MouseDoubleClick">
+                        <ListView.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC2FAFD" Offset="0" />
+                                <GradientStop Color="White" Offset="1" />
+                            </LinearGradientBrush>
+                        </ListView.Background>
+                    </ListView>
+                    <Canvas>
+                        <Button x:Name="btn_searchall" Content="搜索全部" HorizontalAlignment="Left" Height="48" Margin="62,19,0,0" VerticalAlignment="Top" Width="79" Click="btn_searchall_Click" />
+                        <Button x:Name="btn_searcharea" Content="搜索范围" HorizontalAlignment="Left" Height="48" Margin="193,19,0,0" VerticalAlignment="Top" Width="79" />
+                        <WpfControlS:TextBox_IP Canvas.Left="335" Canvas.Top="28" />
+                    </Canvas>
+                </Grid>
+            </Grid>
+        </Grid>
+    </xctk:BusyIndicator>
+</Window>

@@ -1,0 +1,89 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ApexComm.串口服务器"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:WpfControlS="clr-namespace:WpfControlS;assembly=WpfControlS" x:Class="ApexComm.串口服务器.NetCfg"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="500" TextBlock.FontSize="13" ClipToBounds="True">
+    <UserControl.Resources>
+        <XmlDataProvider x:Key="backmode" XPath="NetModes">
+            <x:XData>
+                <NetModes xmlns="">
+                    <NetMode>111</NetMode>
+                    <NetMode>h222</NetMode>
+                </NetModes>
+            </x:XData>
+        </XmlDataProvider>
+    </UserControl.Resources>
+    <StackPanel>
+
+        <Canvas x:Name="cvs_container" Height="161" ClipToBounds="True">
+            <Label x:Name="label" Content="IP地址" Height="26" Canvas.Left="10" Canvas.Top="10" Width="70" />
+            <WpfControlS:TextBox_IP Height="22" Canvas.Left="92" Canvas.Top="10" Width="116" />
+            <Label x:Name="label1" Content="网关" Height="26" Canvas.Left="10" Canvas.Top="36" Width="45" />
+            <WpfControlS:TextBox_IP Height="22" Canvas.Left="92" Canvas.Top="40" Width="116" />
+            <Label x:Name="label2" Content="子网掩码" Height="26" Canvas.Left="10" Canvas.Top="67" Width="70" />
+            <WpfControlS:TextBox_IP Height="22" Canvas.Left="92" Canvas.Top="71" Width="116" />
+            <Label x:Name="label2_Copy" Content="基础端口号" Height="26" Canvas.Left="10" Canvas.Top="98" Width="77" />
+            <WpfControlS:TextBox_IP Height="22" Canvas.Left="92" Canvas.Top="98" Width="94" />
+            <Button x:Name="button" Content="自定义MAC" Click="button_Click" Height="22" Canvas.Left="256" Canvas.Top="98" Width="75" />
+            <Label x:Name="label3" Content="通信协议" Height="26" Canvas.Left="223" Canvas.Top="10" Width="70" />
+            <ComboBox x:Name="comboBox" Height="22" Canvas.Left="298" Canvas.Top="10" Width="74" />
+            <Label x:Name="label4" Content="工作模式" Height="26" Canvas.Left="223" Canvas.Top="36" Width="70" />
+            <ComboBox x:Name="comboBox_backmode" Height="22" Canvas.Left="298" Canvas.Top="40" Width="74" />
+            <Label x:Name="label7" Content="访问IP过滤" Canvas.Left="10" Canvas.Top="129" />
+            <ComboBox x:Name="comboBox1" Canvas.Left="92" Canvas.Top="129" Width="116" />
+        </Canvas>
+        <GroupBox x:Name="groupBox2" Header="网口A访问IP过滤"  Height="218">
+            <Canvas>
+                <Label x:Name="labelFilter1_Copy" Content="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Canvas.Top="28" Canvas.Left="10" />
+                <TextBox x:Name="textBoxipFilter1_Copy" Height="23" Canvas.Left="45" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="30" Width="114" />
+                <TextBox x:Name="textBoxmaskFilter1_Copy" Height="23" Canvas.Left="179" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="30" Width="111" />
+                <Label x:Name="labelFilter1_Copy1" Content="2" HorizontalAlignment="Left"  VerticalAlignment="Top" Canvas.Top="56" Canvas.Left="10" />
+                <TextBox x:Name="textBoxipFilter1_Copy1" Height="23" Canvas.Left="45" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="58" Width="114" />
+                <TextBox x:Name="textBoxmaskFilter1_Copy1" Height="23" Canvas.Left="179" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="58" Width="111" />
+                <Label x:Name="labelFilter1_Copy2" Content="3" HorizontalAlignment="Left"  VerticalAlignment="Top" Canvas.Top="84" Canvas.Left="10" />
+                <TextBox x:Name="textBoxipFilter1_Copy2" Height="23" Canvas.Left="45" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="86" Width="114" />
+                <TextBox x:Name="textBoxmaskFilter1_Copy2" Height="23" Canvas.Left="179" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="86" Width="111" />
+                <Label x:Name="labelFilter1_Copy3" Content="4" HorizontalAlignment="Left"  VerticalAlignment="Top" Canvas.Top="112" Canvas.Left="10" />
+                <TextBox x:Name="textBoxipFilter1_Copy3" Height="23" Canvas.Left="45" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="114" Width="114" />
+                <TextBox x:Name="textBoxmaskFilter1_Copy3" Height="23" Canvas.Left="179" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="114" Width="111" />
+                <Label x:Name="labelFilter1_Copy4" Content="5" HorizontalAlignment="Left"  VerticalAlignment="Top" Canvas.Top="140" Canvas.Left="10" />
+                <TextBox x:Name="textBoxipFilter1_Copy4" Height="23" Canvas.Left="45" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="142" Width="114" />
+                <TextBox x:Name="textBoxmaskFilter1_Copy4" Height="23" Canvas.Left="179" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="142" Width="111" />
+                <Label x:Name="labelFilter1_Copy5" Content="6" HorizontalAlignment="Left"  VerticalAlignment="Top" Canvas.Top="168" Canvas.Left="10" />
+                <TextBox x:Name="textBoxipFilter1_Copy5" Height="23" Canvas.Left="45" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="170" Width="114" />
+                <TextBox x:Name="textBoxmaskFilter1_Copy5" Height="23" Canvas.Left="179" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="170" Width="111" />
+                <Label x:Name="labelFilter1_Copy6" Content="IP地址组" HorizontalAlignment="Left"  VerticalAlignment="Top" Canvas.Left="66" RenderTransformOrigin="0.722,1.963" Canvas.Top="3" />
+                <Label x:Name="labelFilter1_Copy7" Content="计算掩码" HorizontalAlignment="Left"  VerticalAlignment="Top" Canvas.Left="189" Canvas.Top="3" />
+            </Canvas>
+        </GroupBox>
+        <GroupBox x:Name="groupBox" Header="UDP接收主机" Height="170" Canvas.Left="10" Canvas.Top="137">
+            <Canvas>
+                <Label x:Name="label5" Content="第一组" Canvas.Left="17" Canvas.Top="31" />
+                <TextBox x:Name="textBox" Height="23" Canvas.Left="63" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="34" Width="111" />
+                <TextBox x:Name="textBox1" Height="23" Canvas.Left="179" TextWrapping="Wrap" Text="99999" Canvas.Top="34" Width="49" />
+                <Label x:Name="label6" Content="IP地址" Canvas.Left="63" Canvas.Top="8" />
+                <Label x:Name="label6_Copy" Content="端口号" Canvas.Left="179" Canvas.Top="8" />
+                <Label x:Name="label5_Copy" Content="第一组" Canvas.Left="17" Canvas.Top="59" />
+                <TextBox x:Name="textBox_Copy" Height="23" Canvas.Left="63" TextWrapping="Wrap" Text="" Canvas.Top="62" Width="111" />
+                <TextBox x:Name="textBox1_Copy" Height="23" Canvas.Left="179" TextWrapping="Wrap" Text="" Canvas.Top="62" Width="49" />
+                <Label x:Name="label5_Copy1" Content="第一组" Canvas.Left="17" Canvas.Top="87" />
+                <TextBox x:Name="textBox_Copy1" Height="23" Canvas.Left="63" TextWrapping="Wrap" Text="" Canvas.Top="90" Width="111" />
+                <TextBox x:Name="textBox1_Copy1" Height="23" Canvas.Left="179" TextWrapping="Wrap" Text="" Canvas.Top="90" Width="49" />
+                <Label x:Name="label5_Copy3" Content="第一组" Canvas.Left="244" Canvas.Top="34" />
+                <TextBox x:Name="textBox_Copy3" Height="23" Canvas.Left="290" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="37" Width="111" />
+                <TextBox x:Name="textBox1_Copy3" Height="23" Canvas.Left="406" TextWrapping="Wrap" Text="99999" Canvas.Top="37" Width="52" />
+                <Label x:Name="label5_Copy4" Content="第一组" Canvas.Left="244" Canvas.Top="62" />
+                <TextBox x:Name="textBox_Copy4" Height="23" Canvas.Left="290" TextWrapping="Wrap" Text="" Canvas.Top="65" Width="111" />
+                <TextBox x:Name="textBox1_Copy4" Height="23" Canvas.Left="406" TextWrapping="Wrap" Text="" Canvas.Top="65" Width="52" />
+                <Label x:Name="label5_Copy5" Content="第一组" Canvas.Left="244" Canvas.Top="90" />
+                <TextBox x:Name="textBox_Copy5" Height="23" Canvas.Left="290" TextWrapping="Wrap" Text="" Canvas.Top="93" Width="111" />
+                <TextBox x:Name="textBox1_Copy5" Height="23" Canvas.Left="406" TextWrapping="Wrap" Text="" Canvas.Top="93" Width="52" />
+                <CheckBox x:Name="checkBox" Content="对于同一接收主机,所有串口信息发送到给定的基础端口号" Canvas.Left="17" Canvas.Top="122" />
+            </Canvas>
+        </GroupBox>
+    </StackPanel>
+</UserControl>
