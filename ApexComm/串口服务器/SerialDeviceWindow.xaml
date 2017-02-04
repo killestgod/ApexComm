@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ApexComm.串口服务器"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="ApexComm.串口服务器.SerialDeviceWindow"
         mc:Ignorable="d"
-        Title="串口服务器配置工具" Height="600" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" TextBlock.FontSize="13">
+        Title="串口服务器配置工具" Height="600" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" TextBlock.FontSize="13" Closing="Window_Closing">
     <xctk:BusyIndicator Name="mybusy">
         <Canvas>
             <Label x:Name="label" Content="当前装置:" Canvas.Left="10" Canvas.Top="10" />
@@ -19,12 +19,12 @@
                     <Canvas Background="#FFE5E5E5" Height="345" Width="462">
                         <Label x:Name="label1" Content="装置名称：" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="86" Canvas.Top="100" />
                         <TextBox x:Name="textBox_Name" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="242" Canvas.Left="156" Canvas.Top="100" />
-                        <GroupBox x:Name="groupBox" Header="修改装置口令" Height="86" Canvas.Left="86" Canvas.Top="155" Width="312">
+                        <GroupBox x:Name="groupBox" Header="修改装置口令" Height="88" Canvas.Left="86" Canvas.Top="155" Width="332">
                             <Canvas>
                                 <Label x:Name="label2" Content="新口令:" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top" />
-                                <TextBox x:Name="textBox1" Height="23" Canvas.Left="59" TextWrapping="Wrap" Text="" Canvas.Top="17" Width="61" />
+                                <TextBox x:Name="textBox_password" Height="23" Canvas.Left="59" TextWrapping="Wrap" Text="" Canvas.Top="17" Width="93" />
                                 <Label x:Name="label2_Copy" Content="确认:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="157" Canvas.Top="17" />
-                                <TextBox x:Name="textBox1_Copy" Height="23" Canvas.Left="206" TextWrapping="Wrap" Text="" Canvas.Top="17" Width="61" />
+                                <TextBox x:Name="textBox1_Copy" Height="23" Canvas.Left="206" TextWrapping="Wrap" Text="" Canvas.Top="17" Width="94" />
                             </Canvas>
                         </GroupBox>
                     </Canvas>
@@ -34,7 +34,7 @@
                         <StackPanel  ScrollViewer.VerticalScrollBarVisibility="Disabled">
                             <Expander x:Name="expander1" Header="网口A配置" IsExpanded="True">
 
-                                <local:NetCfg Height="Auto">
+                                <local:NetCfg x:Name="netcfgA" Height="Auto">
                                     <local:NetCfg.Background>
                                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
 
@@ -45,9 +45,9 @@
                                     </local:NetCfg.Background>
                                 </local:NetCfg>
                             </Expander>
-                            <Expander x:Name="expander2" Header="Expander" IsExpanded="True">
+                            <Expander x:Name="expander2" Header="网口B配置" IsExpanded="True">
 
-                                <local:NetCfg Height="Auto">
+                                <local:NetCfg x:Name="netcfgB" Height="Auto">
                                     <local:NetCfg.Background>
                                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                                             <GradientStop Color="#FFFDFDFD" Offset="1" />
@@ -72,7 +72,7 @@
                     </Canvas>
                 </TabItem>
             </TabControl>
-            <Button x:Name="button" Content="写入" Height="28" Canvas.Left="375" Canvas.Top="514" Width="58" />
+            <Button x:Name="button_write" Content="写入" Height="28" Canvas.Left="375" Canvas.Top="514" Width="58" Click="button_Click" />
             <Button x:Name="button1" Content="关闭" Canvas.Left="482" Canvas.Top="514" Width="58" Height="28" />
             <Button x:Name="btn_read" Content="读取配置" Canvas.Left="56" Canvas.Top="514" Width="75" Click="btn_read_Click" />
         </Canvas>

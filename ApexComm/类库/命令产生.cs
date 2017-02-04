@@ -207,7 +207,7 @@ namespace ApexComm
                 LogMsg.log_error("收到的包头部标识错误");
                 return false;
             }
-            else if (msg[msg.Length - 2] != 0x03 || msg[msg.Length - 1] != 0x03)
+            else if (msg[msg.Length - 2] != 0x03 || (msg[msg.Length - 1] != 0x03 && msg[msg.Length - 1] != 0x00))
             {
                 LogMsg.log_error("收到的包尾部标识错误");
                 return false;
@@ -223,7 +223,20 @@ namespace ApexComm
                 return false;
             }
             else
+            {
+                // bodyLength = BytesHelper.bytesToInt(msg, 22, 2);//正文长度
                 return true;
+            }
+        }
+
+        /// <summary>
+        /// 获取正文内容
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static byte[] GetBody(byte[] msg)
+        {
+            return msg.CloneRange(24, BytesHelper.bytesToInt(msg, 22, 2));
         }
 
         public static string ByteToDateStr(this byte[] bytes, int offset = 0)
@@ -237,6 +250,17 @@ namespace ApexComm
                 }
             }
             return "";
+        }
+
+        public static byte[] Swap01To10(this byte[] bytes)
+        {
+            byte[] tempbyte = new byte[bytes.Length];
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                int mod = i % 2 == 0 ? 1 : -1;
+                tempbyte[i + mod] = bytes[i];
+            }
+            return tempbyte;
         }
     }
 }

@@ -152,13 +152,26 @@ namespace ApexComm
             Console.WriteLine(listView.SelectedItems.ToString());
             if (listView.SelectedValue != null)
             {
-                this.Hide();
-                ApexComm.串口服务器.SerialDeviceWindow sw = new ApexComm.串口服务器.SerialDeviceWindow();
-                sw.MyDevice = listView.SelectedValue as SerialDevice;
-                sw.Owner = this;
-                sw.ShowDialog();
-                this.Show();
+                if (listView.SelectedValue is SerialDevice)
+                {
+                    SerialDevice sd = listView.SelectedValue as SerialDevice;
+                    if (sd.SVer != "Ver 04.2D")
+                    {
+                        MessageBox.Show(this, "此设备的程序版本不兼容,只支持 Ver04.2D");
+                        return;
+                    }
+                    this.Hide();
+                    ApexComm.串口服务器.SerialDeviceWindow sw = new ApexComm.串口服务器.SerialDeviceWindow();
+                    sw.MyDevice = sd;
+                    sw.Owner = this;
+                    sw.ShowDialog();
+                    this.Show();
+                }
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
         }
     }
 }

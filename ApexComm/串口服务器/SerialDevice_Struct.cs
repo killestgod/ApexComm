@@ -28,7 +28,7 @@ namespace ApexComm
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
         public byte[] cmdtype;//请求方式 eprom 还是映射
 
-        //标识 文本
+        //标识 文本 APEX
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public byte[] setFlagA_B;
 
@@ -79,8 +79,8 @@ namespace ApexComm
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public byte[] comm_cfg_comStopBit;
 
-        //串口外部驱动接口类型 32*2
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        //串口外部驱动接口类型 32*2
         public byte[] comm_cfg_driverMode;
 
         //tcp失败时是否丢弃数据
@@ -108,16 +108,19 @@ namespace ApexComm
         public byte[] net_cfg_Delay;
 
         //tcp 按位给出本串口对应的socket是否启用主动申请TCP链接功能
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-        public byte[] net_cfg_AutoTcpCnnt;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+        public byte[] net_cfg_AutoTcpCnntA;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+        public byte[] net_cfg_AutoTcpCnntB;
 
         //网口a对应的32路ip
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
-        public byte[] net_cfg_ipa;
+        public byte[] net_cfg_Remoteipa;
 
         //网口b对应的32路ip
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
-        public byte[] net_cfg_ipb;
+        public byte[] net_cfg_Remoteipb;
 
         //网口a对应的32路端口
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
@@ -128,8 +131,11 @@ namespace ApexComm
         public byte[] net_cfg_partb;
 
         // 访问IP限制功能模式
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public byte[] net_cfg_LimitIPMode;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public byte[] net_cfg_LimitIPModeA;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public byte[] net_cfg_LimitIPModeB;
 
         // 访问IP限制功能模式
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
@@ -222,8 +228,11 @@ namespace ApexComm
         public byte[] netB_udp_port;
 
         //对于同一组接收主机IP, 装置的所有串口的信息发送到同一个（即基础）端口号（TRUE-是, FALSE-否（默认）
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public byte[] UdpComPortAllSame;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public byte[] UdpComPortAllSameA;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public byte[] UdpComPortAllSameB;
 
         //装置名称: 同时作为装置名称和DNS用户访问名称（默认: APEXTECH）
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 40)]

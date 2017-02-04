@@ -59,6 +59,7 @@ namespace ApexComm.串口服务器
 
         public void SetDevice(SerialDevice sd)
         {
+            comboBox_comport.SelectedIndex = -1;
             Device = sd;
             SerialDevice_Struct ss = sd.Struct_SS;
             //获取串口数量
@@ -76,6 +77,8 @@ namespace ApexComm.串口服务器
         private void comboBox_comport_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectcomNum = comboBox_comport.SelectedIndex;
+            if (selectcomNum == -1)
+                return;
             int mod = 0;
             if (selectcomNum % 2 == 0)
             {
@@ -116,9 +119,20 @@ namespace ApexComm.串口服务器
             comboBoxIsFrameMode.SelectedIndex = BytesHelper.get_bit(tbytes[i], b) ? 1 : 0;
             //网络延迟
             textBox_Delay.Text = Device.Struct_SS.net_cfg_Delay.CloneRange(selectcomNum * 2, 2).bytesToInt(0, 2).ToString();
-            //网口A
-            //自动连接
-            // checkBoxAutoTcpCnntA.IsChecked =
+            //网口自动连接
+            tbytes = CMDFactory.ConvertSwapBytes(Device.Struct_SS.net_cfg_AutoTcpCnntA);
+            checkBoxAutoTcpCnntA.IsChecked = BytesHelper.get_bit(tbytes[i], b) ? true : false;
+            tbytes = CMDFactory.ConvertSwapBytes(Device.Struct_SS.net_cfg_AutoTcpCnntB);
+            checkBoxAutoTcpCnntB.IsChecked = BytesHelper.get_bit(tbytes[i], b) ? true : false;
+            //对方IP
+            tbytes = Device.Struct_SS.net_cfg_Remoteipa.CloneRange(selectcomNum * 4, 4);
+
+            textBox_netIPA.Text = tbytes.Swap01To10().ToHexString_10(".");
+            tbytes = Device.Struct_SS.net_cfg_Remoteipb.CloneRange(selectcomNum * 4, 4);
+            textBox_netIPB.Text = tbytes.Swap01To10().ToHexString_10(".");
+            //对方端口
+            textBox1_netportA.Text = BytesHelper.bytesToInt(Device.Struct_SS.net_cfg_parta, selectcomNum * 2, 2).ToString();
+            textBox1_netportB.Text = BytesHelper.bytesToInt(Device.Struct_SS.net_cfg_partb, selectcomNum * 2, 2).ToString();
         }
 
         private void comboBoxIsFrameMode_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -17,6 +17,7 @@ namespace ApexComm.串口服务器
 
         public static CMDSR 获取所有配置 = new CMDSR(new byte[] { 0x5A, 0x5A }, new byte[] { 0xAA, 0xAA });
         public static CMDSR 保存所有配置 = new CMDSR(new byte[] { 0x5B, 0x5B }, new byte[] { 0xAB, 0xAB });
+        public static CMDSR 复位CPU = new CMDSR(new byte[] { 0x57, 0x57 }, new byte[] { 0xA7, 0xA7 });
     }
 
     public class SerialDeviceProc

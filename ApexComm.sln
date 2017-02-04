@@ -4,6 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApexComm", "ApexComm\ApexComm.csproj", "{F6918447-3BCC-4585-8BA3-13766602D6B8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6BACDD38-886B-467B-8ED0-B241BC7CA1AC} = {6BACDD38-886B-467B-8ED0-B241BC7CA1AC}
+		{E051CF77-DEAA-407D-BC4E-91ACA553925F} = {E051CF77-DEAA-407D-BC4E-91ACA553925F}
+		{AB96ABA8-4049-4BD6-9087-C945BEB1E37D} = {AB96ABA8-4049-4BD6-9087-C945BEB1E37D}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyHelper", "..\..\..\MyHelper\MyCsharpHelper\MyHelper\MyHelper.csproj", "{E051CF77-DEAA-407D-BC4E-91ACA553925F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolHelper", "..\..\..\MyHelper\MyCsharpHelper\MyToolHelper\MyToolHelper.csproj", "{6BACDD38-886B-467B-8ED0-B241BC7CA1AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfControlS", "..\..\..\MyHelper\MyCsharpHelper\WpfControlS\WpfControlS.csproj", "{AB96ABA8-4049-4BD6-9087-C945BEB1E37D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +26,18 @@ Global
 		{F6918447-3BCC-4585-8BA3-13766602D6B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6918447-3BCC-4585-8BA3-13766602D6B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6918447-3BCC-4585-8BA3-13766602D6B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E051CF77-DEAA-407D-BC4E-91ACA553925F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E051CF77-DEAA-407D-BC4E-91ACA553925F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E051CF77-DEAA-407D-BC4E-91ACA553925F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E051CF77-DEAA-407D-BC4E-91ACA553925F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BACDD38-886B-467B-8ED0-B241BC7CA1AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BACDD38-886B-467B-8ED0-B241BC7CA1AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BACDD38-886B-467B-8ED0-B241BC7CA1AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BACDD38-886B-467B-8ED0-B241BC7CA1AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB96ABA8-4049-4BD6-9087-C945BEB1E37D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB96ABA8-4049-4BD6-9087-C945BEB1E37D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB96ABA8-4049-4BD6-9087-C945BEB1E37D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB96ABA8-4049-4BD6-9087-C945BEB1E37D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

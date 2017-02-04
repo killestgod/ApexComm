@@ -46,13 +46,13 @@
             <GroupBox x:Name="groupBox2" Header="TCP协议Client模式参数" Canvas.Left="10" Canvas.Top="263" Width="480" Height="127">
                 <Canvas>
                     <Label x:Name="label6" Content="A网口Service端IP" Canvas.Top="2" />
-                    <TextBox x:Name="textBox1" Height="23" Canvas.Left="119" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="4" Width="111" />
+                    <TextBox x:Name="textBox_netIPA" Height="23" Canvas.Left="119" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="4" Width="111" />
                     <Label x:Name="label6_Copy" Content="B网口Service端IP" Canvas.Top="54" Canvas.Left="1" />
-                    <TextBox x:Name="textBox1_Copy" Height="23" Canvas.Left="119" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="56" Width="111" />
+                    <TextBox x:Name="textBox_netIPB" Height="23" Canvas.Left="119" TextWrapping="Wrap" Text="255.255.255.255" Canvas.Top="56" Width="111" />
                     <Label x:Name="label7" Content="端口" Canvas.Left="235" Canvas.Top="2" />
-                    <TextBox x:Name="textBox1_Copy1" Height="23" Canvas.Left="276" TextWrapping="Wrap" Text="111111" Canvas.Top="4" Width="71" />
+                    <TextBox x:Name="textBox1_netportA" Height="23" Canvas.Left="276" TextWrapping="Wrap" Text="111111" Canvas.Top="4" Width="71" />
                     <Label x:Name="label7_Copy" Content="端口" Canvas.Left="235" Canvas.Top="52" />
-                    <TextBox x:Name="textBox1_Copy2" Height="23" Canvas.Left="276" TextWrapping="Wrap" Text="111111" Canvas.Top="56" Width="71" />
+                    <TextBox x:Name="textBox1_netportB" Height="23" Canvas.Left="276" TextWrapping="Wrap" Text="111111" Canvas.Top="56" Width="71" />
                     <CheckBox x:Name="checkBoxAutoTcpCnntA" Content="A网口是否主动申请对应的TCP连接" Canvas.Left="10" Canvas.Top="34" />
                     <CheckBox x:Name="checkBoxAutoTcpCnntB" Content="B网口是否主动申请对应的TCP连接" Canvas.Left="10" Canvas.Top="86" />
                 </Canvas>

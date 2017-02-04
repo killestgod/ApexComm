@@ -47,7 +47,8 @@ namespace ApexComm
                     }
                     SerialDevice device = tdevice as SerialDevice;
                     device.PC_Endpoint = pcip;
-                    device.Client_Endpoint = clientendip;
+                    //此设备非广播包不回复
+                    device.Client_Endpoint = new System.Net.IPEndPoint(IPAddress.Parse("255.255.255.255"), 61199); ;
                     device.SN = sn;
                     device.PVer = "Ver " + msg[25].ToString("X2") + "." + msg[24].ToString("X2");
                     device.SVer = "Ver " + msg[27].ToString("X2") + "." + msg[26].ToString("X2");

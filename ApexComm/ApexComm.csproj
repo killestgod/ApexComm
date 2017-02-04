@@ -55,11 +55,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xceed.Wpf.DataGrid">
-      <HintPath>..\..\..\..\MyHelper\DLLS\Extended WPF Toolkit Binaries\Xceed.Wpf.DataGrid.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit">
-      <HintPath>..\..\..\..\MyHelper\DLLS\Extended WPF Toolkit Binaries\Xceed.Wpf.Toolkit.dll</HintPath>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\MyHelper\DLLS\Extended.Wpf.Toolkit\Extended WPF Toolkit Binaries\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +161,20 @@
   <ItemGroup>
     <Resource Include="ooopic_1483665038.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\MyHelper\MyCsharpHelper\MyHelper\MyHelper.csproj">
+      <Project>{e051cf77-deaa-407d-bc4e-91aca553925f}</Project>
+      <Name>MyHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\MyHelper\MyCsharpHelper\MyToolHelper\MyToolHelper.csproj">
+      <Project>{6bacdd38-886b-467b-8ed0-b241bc7ca1ac}</Project>
+      <Name>MyToolHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\MyHelper\MyCsharpHelper\WpfControlS\WpfControlS.csproj">
+      <Project>{ab96aba8-4049-4bd6-9087-c945beb1e37d}</Project>
+      <Name>WpfControlS</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

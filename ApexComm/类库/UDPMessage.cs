@@ -24,6 +24,7 @@ namespace ApexComm
             }
             catch
             {
+                throw;
             }
             return datas;
         }
