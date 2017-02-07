@@ -105,7 +105,7 @@ namespace ApexComm
                     }
                     catch (Exception ex)
                     {
-                        LogMsg.log_error(ip + "    udp初始化:" + ex.ToString());
+                        // LogMsg.log_error(ip + "    udp初始化:" + ex.ToString());
                     }
                 }
 
@@ -165,7 +165,9 @@ namespace ApexComm
                     sw.MyDevice = sd;
                     sw.Owner = this;
                     sw.ShowDialog();
+
                     this.Show();
+                    btn_searchall_Click(sender, e);
                 }
             }
         }

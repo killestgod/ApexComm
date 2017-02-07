@@ -8,6 +8,11 @@ namespace ApexComm
     public class SerialDevice : MyDevice
     {
         /// <summary>
+        /// 如果有输入错误,则为false
+        /// </summary>
+        public bool IsCheck = true;
+
+        /// <summary>
         /// 数据结构体对象
         /// </summary>
         public SerialDevice_Struct Struct_SS;

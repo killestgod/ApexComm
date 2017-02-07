@@ -125,20 +125,33 @@ namespace ApexComm
 
         /// <summary>
         /// 字符串处理  交换高位和地位
+        /// 只支持偶数个
         /// </summary>
         /// <param name="bytes"></param>
         /// <param name="offset"></param>
         /// <param name="length"></param>
-        public static byte[] ConvertStrTobytes(this string str, int length)
+        public static byte[] ConvertStrTobytes(this string str, int maxlength = -1)
         {
-            byte[] bytes = new byte[length];
-
             byte[] tempbytes = Encoding.GetEncoding("GBK").GetBytes(str);
-
-            for (int i = 0; i < length; i = i + 2)
+            if (maxlength == -1)
             {
-                bytes[i] = tempbytes[i + 1];
-                bytes[i + 1] = tempbytes[i];
+                maxlength = tempbytes.Length;
+            }
+            byte[] bytes = new byte[maxlength];
+            for (int i = 0; i < tempbytes.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    bytes[i + 1] = tempbytes[i];
+                }
+                else
+                {
+                    bytes[i - 1] = tempbytes[i];
+                    if (i >= maxlength)
+                    {
+                        break;
+                    }
+                }
             }
 
             return bytes;
@@ -156,15 +169,9 @@ namespace ApexComm
             return BytesHelper.bytesToInt(ll.ToArray(), 0);
         }
 
-        /// <summary>
-        /// 4字节交换操作
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
-        public static byte[] ConvertSwapBytes(byte[] bytes, int offset = 0)
+        public static byte[] ConvertIntToByte(this int num)
         {
-            byte[] temp = bytes.CloneRange(0, 4);
+            byte[] temp = BytesHelper.intToBytes(num);
             List<byte> ll = new List<byte>();
             // 6 7 4 5
             ll.Add(temp[2]);
@@ -174,9 +181,15 @@ namespace ApexComm
             return ll.ToArray();
         }
 
-        public static byte[] ConvertIntToByte(this int num)
+        /// <summary>
+        /// 4字节交换操作
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        public static byte[] ConvertSwapBytes(byte[] bytes, int offset = 0)
         {
-            byte[] temp = BytesHelper.intToBytes(num);
+            byte[] temp = bytes.CloneRange(0, 4);
             List<byte> ll = new List<byte>();
             // 6 7 4 5
             ll.Add(temp[2]);

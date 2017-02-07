@@ -44,6 +44,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -66,6 +67,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\MyDevice.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="串口服务器\NetCfg.xaml.cs">
       <DependentUpon>NetCfg.xaml</DependentUpon>
     </Compile>

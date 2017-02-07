@@ -37,7 +37,6 @@
                     <Canvas>
                         <Button x:Name="btn_searchall" Content="搜索全部" HorizontalAlignment="Left" Height="48" Margin="62,19,0,0" VerticalAlignment="Top" Width="79" Click="btn_searchall_Click" />
                         <Button x:Name="btn_searcharea" Content="搜索范围" HorizontalAlignment="Left" Height="48" Margin="193,19,0,0" VerticalAlignment="Top" Width="79" />
-                        <TextBox Canvas.Left="335" Canvas.Top="28" />
                     </Canvas>
                 </Grid>
             </Grid>

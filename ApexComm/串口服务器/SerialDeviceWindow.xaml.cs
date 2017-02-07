@@ -19,6 +19,7 @@ using System.Collections;
 using System.Net;
 using System.Net.Sockets;
 using System.Diagnostics;
+using System.Resources;
 
 namespace ApexComm.串口服务器
 {
@@ -27,7 +28,10 @@ namespace ApexComm.串口服务器
     /// </summary>
     public partial class SerialDeviceWindow : Window
     {
-        public SerialDevice MyDevice = new SerialDevice();
+        /// <summary>
+        /// 上面传下的设备对象
+        /// </summary>
+        public SerialDevice MyDevice;
 
         /// <summary>
         /// 写入后 收到的回复信息
@@ -36,9 +40,6 @@ namespace ApexComm.串口服务器
 
         public SerialDeviceWindow()
         {
-            MyDevice.PC_Endpoint = new System.Net.IPEndPoint(IPAddress.Parse("192.168.1.71"), 61199);
-            MyDevice.Client_Endpoint = new System.Net.IPEndPoint(IPAddress.Parse("255.255.255.255"), 61199);
-            MyDevice.SN = "P2084ECT16122003";
             InitializeComponent();
             List<string> netmodes = new List<string>()
             {
@@ -86,17 +87,33 @@ namespace ApexComm.串口服务器
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //textBox_Name.Text = MyDevice.Name;
-            // string hex = "eb:90:eb:90:32:50:36:31:45:34:54:43:36:31:31:31:38:32:36:30:aa:aa:d2:04:00:00:50:41:58:45:2d:04:08:02:0e:11:37:1e:2d:04:06:03:12:0f:0a:1e:32:4e:31:53:2d:36:38:34:43:35:45:2d:00:54:00:00:00:00:00:00:32:50:36:31:45:34:54:43:36:31:31:31:38:32:36:30:00:00:00:00:01:00:01:00:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:00:00:80:25:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:08:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:02:00:02:00:02:00:02:00:02:00:02:00:02:00:02:00:02:00:02:00:02:00:02:00:02:00:02:00:02:00:02:00:02:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:02:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:ff:ff:ff:ff:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:0a:00:ff:ff:ff:ff:ff:ff:ff:ff:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0c:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:a8:c0:0d:00:ed:13:ee:13:ef:13:f0:13:f1:13:f2:13:f3:13:f4:13:f5:13:f6:13:f7:13:f8:13:f9:13:fa:13:fb:13:fc:13:fd:13:fe:13:ff:13:00:14:01:14:02:14:03:14:04:14:05:14:06:14:07:14:08:14:09:14:0a:14:0b:14:0c:14:ed:13:ee:13:ef:13:f0:13:f1:13:f2:13:f3:13:f4:13:f5:13:f6:13:f7:13:f8:13:f9:13:fa:13:fb:13:fc:13:fd:13:fe:13:ff:13:00:14:01:14:02:14:03:14:04:14:05:14:06:14:07:14:08:14:09:14:0a:14:0b:14:0c:14:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:a8:c0:02:00:a8:c0:03:00:ff:ff:00:ff:ff:ff:00:ff:a8:c0:01:00:a8:c0:01:00:ed:13:ed:13:00:00:00:00:c0:00:a8:c0:02:00:c0:00:a8:c0:03:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:73:55:72:65:32:31:61:4e:65:6d:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:32:31:34:33:36:35:38:37:50:41:58:45:00:00:1e:7a:64:ba:03:03";
-            string hex = "EB 90 EB 90 32 50 38 30 45 34 54 43 36 31 32 31 30 32 33 30 AA AA D2 04 00 00 50 41 58 45 2D 04 08 02 0E 11 37 1E 2D 04 06 03 12 0F 0A 1E 32 4E 30 53 2D 38 38 34 43 35 45 2D 00 54 00 00 00 00 00 00 32 50 38 30 45 34 54 43 36 31 32 31 30 32 33 30 00 00 00 00 01 00 01 00 0A 00 00 8C 07 00 00 08 05 00 00 46 03 00 00 84 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 07 08 05 06 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 01 00 03 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 0A 00 02 00 00 00 02 00 01 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 00 00 00 00 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF FF FF 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 FF FF FF FF FF FF FF FF A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A8 C0 02 00 A8 C0 03 00 FF FF 00 FF FF FF 00 FF A8 C0 01 00 A8 C0 01 00 ED 13 ED 13 00 00 00 00 C0 00 A8 C0 02 00 C0 00 A8 C0 03 00 FF FF 00 00 01 00 00 00 FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AC 26 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 73 55 72 65 31 31 31 31 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 32 31 34 33 36 35 38 37 50 41 58 45 00 00 79 F4 64 BB 03 03";
-            //写入
-            hex2 = "EB 90 EB 90 32 50 38 30 45 34 54 43 36 31 32 31 30 32 33 30 5B 5B D8 04 81 90 85 98 94 85 83 88 50 41 58 45 2D 04 08 02 0E 11 37 1E 2D 04 06 03 12 0F 0A 1E 32 4E 30 53 2D 38 38 34 43 35 45 2D 00 54 00 00 00 00 00 00 32 50 38 30 45 34 54 43 36 31 32 31 30 32 33 30 00 00 00 00 01 00 01 00 0A 00 00 8C 07 00 00 08 05 00 00 46 03 00 00 84 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 07 08 05 06 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 01 00 03 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 0A 00 02 00 00 00 02 00 01 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 00 00 00 00 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF FF FF 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 FF FF FF FF FF FF FF FF A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A8 C0 02 00 A8 C0 03 00 FF FF 00 FF FF FF 00 FF A8 C0 01 00 A8 C0 01 00 ED 13 ED 13 00 00 00 00 C0 00 A8 C0 02 00 C0 00 A8 C0 03 00 FF FF 00 00 01 00 00 00 FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AC 26 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 73 55 72 65 31 31 31 31 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 32 31 34 33 36 35 38 37 50 41 58 45 00 00 79 F4 8C 4F 03 00";
-            byte[] msg = BytesHelper.StrToHexBytes(hex, " ");
+            bool isdebug = false;
+            if (MyDevice == null)
+            {
+                isdebug = true;
+                MyDevice = new SerialDevice();
+                MyDevice.PC_Endpoint = new System.Net.IPEndPoint(IPAddress.Parse("192.168.1.71"), 61199);
+                MyDevice.Client_Endpoint = new System.Net.IPEndPoint(IPAddress.Parse("255.255.255.255"), 61199);
+                MyDevice.SN = "P2084ECT16122003";
+                string hex = "EB 90 EB 90 32 50 38 30 45 34 54 43 36 31 32 31 30 32 33 30 AA AA D2 04 00 00 50 41 58 45 2D 04 08 02 0E 11 37 1E 2D 04 06 03 12 0F 0A 1E 32 4E 30 53 2D 38 38 34 43 35 45 2D 00 54 00 00 00 00 00 00 32 50 38 30 45 34 54 43 36 31 32 31 30 32 33 30 00 00 00 00 01 00 01 00 0A 00 00 8C 07 00 00 08 05 00 00 46 03 00 00 84 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 00 00 80 25 07 08 05 06 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 01 00 03 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 0A 00 02 00 00 00 02 00 01 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 02 00 00 00 00 00 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF FF FF 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 0A 00 FF FF FF FF FF FF FF FF A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0C 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 A8 C0 0D 00 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 ED 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A8 C0 02 00 A8 C0 03 00 FF FF 00 FF FF FF 00 FF A8 C0 01 00 A8 C0 01 00 ED 13 ED 13 00 00 00 00 C0 00 A8 C0 02 00 C0 00 A8 C0 03 00 FF FF 00 00 01 00 00 00 FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AC 26 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 73 55 72 65 31 31 31 31 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 32 31 34 33 36 35 38 37 50 41 58 45 00 00 79 F4 64 BB 03 03";
+                hex2 = Properties.Settings.Default.HEX;
+                byte[] msg = BytesHelper.StrToHexBytes(hex, " ");
+                WaitingCMD = new byte[] { 0x11, 0x11 };
+                ReceiveMsg(msg);
+            }
+            else
+            {
+            }
+            watermarkPasswordBox_pwd.Password = Properties.Settings.Default.PWD;
 
             //初始化udp通讯
             Udpclient = new UdpClient(MyDevice.PC_Endpoint);
             Udpclient.BeginReceive(ReceiveCallback, Udpclient);
-            ReceiveMsg(msg);
+            if (!isdebug)
+            {
+                SendAndWait(SerialDeviceProc.ReadAllCfg(MyDevice), CMDCode.获取所有配置.CMD_Receive);
+            }
+            //
         }
 
         /// <summary>
@@ -146,6 +163,10 @@ namespace ApexComm.串口服务器
             {
                 try
                 {
+                    if (BytesHelper.Equalbybyte(WaitingCMD, new byte[] { 0x00, 0x00 }))
+                    {
+                        return;//无用的命令 可能是其他机器请求的
+                    }
                     //获取回复的命令码
                     byte[] cmdcode = msg.CloneRange(20, 2);
                     LastCMD = cmdcode;
@@ -159,6 +180,7 @@ namespace ApexComm.串口服务器
                     //读取上来的配置
                     if (BytesHelper.Equalbybyte(cmdcode, ApexComm.串口服务器.CMDCode.获取所有配置.CMD_Receive))
                     {
+                        LogMsg.log("读取配置完成");
                         sp_state.Children.Clear();
                         if (msg[26] != 0x50 || msg[27] != 0x41)
                         {
@@ -171,17 +193,15 @@ namespace ApexComm.串口服务器
                         MyDevice.Struct_SS = ss;
 
                         ReShowUI(MyDevice);
-                        SerialCfg.SetDevice(MyDevice);
-                        netcfgA.NetNum = 0;
-                        netcfgB.NetNum = 1;
-                        netcfgA.SetDevice(MyDevice);
-                        netcfgB.SetDevice(MyDevice);
                     }
                     else if (BytesHelper.Equalbybyte(cmdcode, ApexComm.串口服务器.CMDCode.保存所有配置.CMD_Receive))
                     {
                         byte[] xx = CMDFactory.GetBody(msg);
-                        string resultstr = WriteResult[xx[0]];
-                        //MessageBox.Show(resultstr);
+                        if (xx[0] != 0x06)
+                        {
+                            string resultstr = WriteResult[xx[0]];
+                            MessageBox.Show(resultstr);
+                        }
                     }
                     else if (BytesHelper.Equalbybyte(cmdcode, ApexComm.串口服务器.CMDCode.复位CPU.CMD_Receive))
                     {
@@ -190,6 +210,9 @@ namespace ApexComm.串口服务器
                     else if (BytesHelper.Equalbybyte(cmdcode, ApexComm.串口服务器.CMDCode.搜索设备.CMD_Receive))
                     {
                         LogMsg.log("搜索设备完成");
+
+                        //重新获取配置信息
+                        SendAndWait(SerialDeviceProc.ReadAllCfg(MyDevice), CMDCode.获取所有配置.CMD_Receive);
                     }
                     else
                     {
@@ -220,10 +243,10 @@ namespace ApexComm.串口服务器
             sp_state.Children.Add(new TextBlock() { Text = $"{"名字:",lbllength}: {sd.Name}" });
             sp_state.Children.Add(new TextBlock() { Text = $"{"当前数据获取方式",lbllength}: {ss.cmdtype.ToHexString()}" });
             sp_state.Children.Add(new TextBlock() { Text = $"{"有效设置标识",lbllength}: {ss.setFlagA_B.ConvertbyteToStr()}" });
-            sp_state.Children.Add(new TextBlock() { Text = $"{"程序版本pVer",lbllength}: {ss.pVer.ToHexString()}" });
-            sp_state.Children.Add(new TextBlock() { Text = $"{"编译版本日期",lbllength}: {ss.pDate.ToHexString_10()}" });
-            sp_state.Children.Add(new TextBlock() { Text = $"{"设置版本Ver",lbllength}: {ss.sVer.ToHexString()}" });
-            sp_state.Children.Add(new TextBlock() { Text = $"{"设置版本日期",lbllength}: {ss.sDate.ToHexString_10()}" });
+            sp_state.Children.Add(new TextBlock() { Text = $"{"程序版本pVer",lbllength}: {ss.pVer.Swap01To10().ToHexString(".")}" });
+            sp_state.Children.Add(new TextBlock() { Text = $"{"编译版本日期",lbllength}: { CMDCode.DateTimeFromBytes(ss.pDate) }" });
+            sp_state.Children.Add(new TextBlock() { Text = $"{"设置版本Ver",lbllength}: {ss.sVer.Swap01To10().ToHexString(".")}" });
+            sp_state.Children.Add(new TextBlock() { Text = $"{"设置版本日期",lbllength}: { CMDCode.DateTimeFromBytes(ss.sDate)}" });
             sd.TypeName = ss.typename.ConvertbyteToStr();
             sp_state.Children.Add(new TextBlock() { Text = $"{"装置类型",lbllength}: {  sd.TypeName}" });
             //备用模式
@@ -231,15 +254,42 @@ namespace ApexComm.串口服务器
             //名称
             textBox_Name.Text = sd.Name;
             //密码
-            textBox_password.Text = ss.DevicePass.ConvertbyteToStr();
+            //textBox_password.Text = ss.DevicePass.ConvertbyteToStr();
             //APEX有效设置标识2
             sp_state.Children.Add(new TextBlock() { Text = $"{"有效设置标识",lbllength}: {  ss.ApexSetFlag.ConvertbyteToStr()}" });
             //
+
+            mySerialCfg.SetDevice(MyDevice);
+            netcfgA.NetNum = 0;
+            netcfgA.SDWindow = this;
+            netcfgB.NetNum = 1;
+            netcfgB.SDWindow = this;
+            netcfgA.SetDevice(MyDevice);
+            netcfgB.SetDevice(MyDevice);
+            int netnum = int.Parse(MyDevice.TypeName.Substring(1, 1));
+
+            netcfgB.Visibility = netnum == 1 ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            string pwd = watermarkPasswordBox_pwd.Password;
+            if (string.IsNullOrEmpty(pwd))
+            {
+                pwd = "12345678";
+            }
+
+            if (!pwd.Equals(MyDevice.Struct_SS.DevicePass.ConvertbyteToStr()))
+            {
+                MessageBox.Show("密码输入错误!!!");
+                watermarkPasswordBox_pwd.Focus();
+                return;
+            }
+
+            //结构体正文部分的xor校验
             byte[] ssbytes = StructWithBytes.StructToBytes(MyDevice.Struct_SS);
+            byte[] xorbytes = CMDFactory.Xor(ssbytes, 26, 1230);
+            ssbytes.Replace(xorbytes, ssbytes.Length - 6);
             List<byte> msg = new List<byte>();
             msg.AddRange(ssbytes.CloneRange(0, 20));
             //命令码
@@ -247,7 +297,7 @@ namespace ApexComm.串口服务器
             //正文长度
             //int a =  "D8 04"
             msg.AddRange(BytesHelper.StrToHexBytes("D8 04"));
-            msg.AddRange(CMDCode.SuperPWD);
+            msg.AddRange(CMDCode.SuperPWD);//超级密码
             msg.AddRange(ssbytes.CloneRange(24 + 2, 1232));
             //从 报文命令码  开始的包括所有正文内容的字方式XOR和   XOR L XOR H
             msg.AddRange(CMDFactory.Xor(msg, 4, msg.Count - 4));
@@ -256,25 +306,19 @@ namespace ApexComm.串口服务器
             //1240-6
             Console.WriteLine(BytesHelper.ToHexString(msg.ToArray()));
 
-            byte[] tok = BytesHelper.StrToHexBytes(hex2);
-            byte[] ttt = msg.ToArray();
+            //byte[] tok = BytesHelper.StrToHexBytes(hex2);
+            //byte[] ttt = msg.ToArray();
 
-            for (int i = 0; i < tok.Length; i++)
-            {
-                if (tok[i] != ttt[i])
-                {
-                    Console.Write(tok[i].ToString("X2") + " ");
-                }
-            }
-            Console.WriteLine();
-            for (int i = 0; i < tok.Length; i++)
-            {
-                if (tok[i] != ttt[i])
-                {
-                    Console.Write(ttt[i].ToString("X2") + " ");
-                }
-            }
-            SendAndWait(msg.ToArray(), CMDCode.搜索设备.CMD_Receive);
+            //for (int i = 0; i < tok.Length; i++)
+            //{
+            //    if (tok[i] != ttt[i])
+            //    {
+            //        Console.WriteLine(i + ":  对-" + tok[i].ToString("X2") + " 新-" + ttt[i].ToString("X2"));
+            //    }
+            //}
+            //Console.WriteLine();
+
+            SendAndWait(msg.ToArray(), CMDCode.获取所有配置.CMD_Receive);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -291,12 +335,18 @@ namespace ApexComm.串口服务器
         private Stopwatch usedTime = new Stopwatch();
 
         /// <summary>
+        /// 等待要出现的命令
+        /// </summary>
+        private byte[] WaitingCMD = new byte[] { 0x00, 0x00 };
+
+        /// <summary>
         /// 发送并等待命令
         /// </summary>
         /// <param name="msg">正文</param>
         /// <param name="cmd">等待出现的命令码</param>
         private void SendAndWait(byte[] msg, byte[] thiscmd)
         {
+            WaitingCMD = thiscmd;
             LastCMD = new byte[] { 0x00, 0x00 };
             mybusy.IsBusy = true;
             Msgstr = "命令执行完成";
@@ -308,7 +358,7 @@ namespace ApexComm.串口服务器
                 //3秒超时
                 while (timeout < 50)
                 {
-                    if (BytesHelper.Equalbybyte(LastCMD, thiscmd))
+                    if (BytesHelper.Equalbybyte(LastCMD, WaitingCMD))
                     {
                         return true;
                     }
@@ -324,6 +374,8 @@ namespace ApexComm.串口服务器
             t.Start();
             t.ContinueWith((tt) =>
             {
+                LastCMD = new byte[] { 0x00, 0x00 };
+                WaitingCMD = new byte[] { 0x00, 0x00 };
                 long a = 500 - usedTime.ElapsedMilliseconds;
                 if (a > 0)
                 {
@@ -339,6 +391,166 @@ namespace ApexComm.串口服务器
                     }
                 }));
             });
+        }
+
+        private void comboBox_backmode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MyDevice.Struct_SS.backmode = (ushort)comboBox_backmode.SelectedIndex;
+            MyDevice.Struct_SS.backmode_q = (ushort)comboBox_backmode.SelectedIndex;
+        }
+
+        private void textBox_Name_LostFocus(object sender, RoutedEventArgs e)
+        {
+            MyDevice.Struct_SS.DeviceName = CMDFactory.ConvertStrTobytes(textBox_Name.Text.Trim(), 40);
+        }
+
+        /// <summary>
+        /// 重设密码
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void watermarkPasswordBox_newpwdre_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string pwd1 = watermarkPasswordBox_newpwd.Password;
+            string pwd2 = watermarkPasswordBox_newpwdre.Password;
+
+            if (!string.IsNullOrEmpty(pwd1) && pwd1.Equals(pwd2))
+            {
+                MyDevice.Struct_SS.DevicePass = CMDFactory.ConvertStrTobytes(pwd1, 8);
+            }
+            else
+            {
+                MessageBox.Show("重复输入的密码错误");
+                watermarkPasswordBox_newpwd.Password = "";
+                watermarkPasswordBox_newpwdre.Password = "";
+            }
+        }
+
+        private void watermarkPasswordBox_pwd_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.PWD = watermarkPasswordBox_pwd.Password;
+            Properties.Settings.Default.Save();
+        }
+
+        /// <summary>
+        /// 同步隐藏或显示tcp的一些选项
+        /// </summary>
+        public void UI_tcpudp()
+        {
+            {
+                mySerialCfg.net0cfg.IsEnabled = true;
+                if (MyDevice.Struct_SS.Net0IsUdpProtocol.bytesToInt(0, 2) == 0 ? true : false)
+                {
+                    int selectmode = MyDevice.Struct_SS.Net0TcpMode.bytesToInt(0, 2);
+                    // tcp
+                    if (selectmode == 0)
+                    {
+                        mySerialCfg.net0cfg.IsEnabled = false;
+                    }
+                }
+                else
+                {
+                    //udp
+                    mySerialCfg.net0cfg.IsEnabled = false;
+                }
+            }
+
+            {
+                mySerialCfg.net1cfg.IsEnabled = true;
+                if (MyDevice.Struct_SS.Net1IsUdpProtocol.bytesToInt(0, 2) == 0 ? true : false)
+                {
+                    int selectmode = MyDevice.Struct_SS.Net1TcpMode.bytesToInt(0, 2);
+                    // tcp
+                    if (selectmode == 0)
+                    {
+                        mySerialCfg.net1cfg.IsEnabled = false;
+                    }
+                }
+                else
+                {
+                    //udp
+                    mySerialCfg.net1cfg.IsEnabled = false;
+                }
+            }
+        }
+
+        private void button_save_Click(object sender, RoutedEventArgs e)
+        {
+            //系统路径-涉及不到的可以去掉
+            string strPath = PathHelper.GetCurrentDirectory();
+            Microsoft.Win32.SaveFileDialog dialogOpenFile = new Microsoft.Win32.SaveFileDialog();
+            dialogOpenFile.DefaultExt = ".cfg";//默认扩展名
+            dialogOpenFile.AddExtension = true;//是否自动添加扩展名
+            dialogOpenFile.Filter = "配置文件|*.cfg";
+            dialogOpenFile.OverwritePrompt = true;//文件已存在是否提示覆盖
+            dialogOpenFile.FileName = "";//默认文件名
+            dialogOpenFile.CheckPathExists = true;//提示输入的文件名无效
+            dialogOpenFile.Title = "保存...";
+            dialogOpenFile.InitialDirectory = strPath;
+
+            //显示对话框
+            bool? b = dialogOpenFile.ShowDialog();
+            //Nullable<bool> b = ... 方式二
+            if (b == true)//点击保存
+            {
+                byte[] ssbytes = StructWithBytes.StructToBytes(MyDevice.Struct_SS);
+
+                //结构体正文部分的xor校验
+                byte[] xorbytes = CMDFactory.Xor(ssbytes, 26, 1230);
+                ssbytes.Replace(xorbytes, ssbytes.Length - 6);
+
+                FileHelper.WriteBytesToFile(dialogOpenFile.FileName, ssbytes);
+            }
+        }
+
+        private void button_init_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("是否恢复出厂设置?", "警告", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                byte[] bb = CMDFactory.MakeCMDBytes(CMDCode.恢复出厂.CMD_Send, CMDCode.SuperPWD
+                     , MyDevice.SN.ConvertStrTobytes());
+                SendAndWait(bb, CMDCode.恢复出厂.CMD_Receive);
+            }
+        }
+
+        private void button_read_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog1 = new Microsoft.Win32.OpenFileDialog();
+            //设置标题
+            openFileDialog1.Title = "打开文件对话框";
+            //该值指示对话框在关闭前是否还原当前目录,Environment.CurrentDirectory 的值不会被改变
+            openFileDialog1.RestoreDirectory = true;
+
+            //设置目录
+            //string dir = @"c:\";
+            //初始打开的对话框
+            openFileDialog1.InitialDirectory = PathHelper.GetCurrentDirectory();
+            //初始化打开我的文档
+            //openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            //打开的如果是快捷方式 打开的是指向的文件
+            openFileDialog1.DereferenceLinks = false;
+            //设置过滤器
+            openFileDialog1.Filter = "配置文件|*.cfg";
+            //设置默认选择那个过滤器
+            openFileDialog1.FilterIndex = 0;
+            //指定打开对话框弹出时选定的
+            openFileDialog1.FileName = "";
+            //显示"以只读方式打开"选项
+            openFileDialog1.ShowReadOnly = true;
+            //检查用户指示的路径是否存在
+            openFileDialog1.CheckPathExists = true;
+            //检查用户指示的文件是否存在
+            openFileDialog1.CheckFileExists = true;
+
+            if (openFileDialog1.ShowDialog() == true)
+            {
+                ReceiveMsg(FileHelper.ReadBytesFromFile(openFileDialog1.FileName));
+            }
+        }
+
+        private void button_close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

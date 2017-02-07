@@ -24,10 +24,11 @@ namespace ApexComm
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
         public byte[] len;
 
-        //正文
+        //接收正文
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
         public byte[] cmdtype;//请求方式 eprom 还是映射
 
+        //发送时正文开始位置 26
         //标识 文本 APEX
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public byte[] setFlagA_B;
@@ -60,22 +61,24 @@ namespace ApexComm
         // [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
         public UInt16 backmode;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] backmode_q;
+        //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public UInt16 backmode_q;
 
         //串口设置 32*4 波特率
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
         public byte[] comm_cfg_baudrate;
 
-        //串口设置 32*4 串口数据位数
+        //串口设置 32*1 串口数据位数
+        //按字节给出(COM1在[0]的高字节)串口数据位数: 串口数据位数: 5、6、7或8（默认）
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
         public byte[] comm_cfg_databit;
 
-        //串口设置 32*4 串口校验方式
+        //串口设置 32*1 串口校验方式
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
         public byte[] comm_cfg_comParity;
 
         //串口停止位数 按位
+        //按位给出串口停止位数: 0-1位（默认）, 1-2位
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public byte[] comm_cfg_comStopBit;
 
@@ -132,107 +135,107 @@ namespace ApexComm
 
         // 访问IP限制功能模式
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] net_cfg_LimitIPModeA;
+        public byte[] Net0_cfg_LimitIPMode;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] net_cfg_LimitIPModeB;
+        public byte[] Net1_cfg_LimitIPMode;
+
+        // 访问IP限制功能模式 6*4
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
+        public byte[] Net0_cfg_utLimitIP;
 
         // 访问IP限制功能模式
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
-        public byte[] net_cfg_utLimitIPa;
+        public byte[] Net1_cfg_utLimitIP;
 
         // 访问IP限制功能模式
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
-        public byte[] net_cfg_utLimitIPb;
+        public byte[] Net0_cfg_utLimitMask;
 
         // 访问IP限制功能模式
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
-        public byte[] net_cfg_utLimitMaska;
-
-        // 访问IP限制功能模式
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
-        public byte[] net_cfg_utLimitMaskb;
+        public byte[] Net1_cfg_utLimitMask;
 
         //netipa
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public byte[] net_cfg_netipa;
+        public byte[] Net0_cfg_netip;
 
         //netipb
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public byte[] net_cfg_netipb;
+        public byte[] Net1_cfg_netip;
 
         //netmaska
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public byte[] net_cfg_netmaska;
+        public byte[] Net0_cfg_netmask;
 
         //netmaskb
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public byte[] net_cfg_netmaskb;
+        public byte[] Net1_cfg_netmask;
 
         //netGatewaya
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public byte[] net_cfg_netGatewaya;
+        public byte[] Net0_cfg_netGateway;
 
         //netGatewayb
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public byte[] net_cfg_netGatewayb;
+        public byte[] Net1_cfg_netGateway;
 
         //对应的通信端口号
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] net1BasePort;
+        public byte[] Net0BasePort;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] net2BasePort;
+        public byte[] Net1BasePort;
 
         //是否指定MAC
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] IsMacAsignedA;
+        public byte[] Net0IsMacAsigned;
 
         //是否指定MAC
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] IsMacAsignedB;
+        public byte[] Net1IsMacAsigned;
 
         //指定MAC
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-        public byte[] MacAsignedA;
+        public byte[] Net0MacAsigned;
 
         //指定MAC
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-        public byte[] MacAsignedB;
+        public byte[] Net1MacAsigned;
 
         //协议
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] IsUdpProtocolA;
+        public byte[] Net0IsUdpProtocol;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] IsUdpProtocolB;
+        public byte[] Net1IsUdpProtocol;
 
         //TCP协议下的工作模式
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] TcpModeA;
+        public byte[] Net0TcpMode;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] TcpModeB;
+        public byte[] Net1TcpMode;
 
         //udp组
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
-        public byte[] netA_udp;
+        public byte[] Net0_udp;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
-        public byte[] netB_udp;
+        public byte[] Net1_udp;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
-        public byte[] netA_udp_port;
+        public byte[] Net0_udp_port;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
-        public byte[] netB_udp_port;
+        public byte[] Net1_udp_port;
 
         //对于同一组接收主机IP, 装置的所有串口的信息发送到同一个（即基础）端口号（TRUE-是, FALSE-否（默认）
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] UdpComPortAllSameA;
+        public byte[] Net0UdpComPortAllSame;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public byte[] UdpComPortAllSameB;
+        public byte[] Net1UdpComPortAllSame;
 
         //装置名称: 同时作为装置名称和DNS用户访问名称（默认: APEXTECH）
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 40)]
@@ -246,9 +249,13 @@ namespace ApexComm
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public byte[] ApexSetFlag;
 
-        //????
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public byte[] WWWW;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        //xor对齐
+        public byte[] xor_cfg_q;
+
+        //结构的xor
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public byte[] xor_cfg;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
         public byte[] xor;

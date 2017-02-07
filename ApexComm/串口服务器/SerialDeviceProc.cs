@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MyHelper;
 
 namespace ApexComm.串口服务器
 {
@@ -18,6 +19,66 @@ namespace ApexComm.串口服务器
         public static CMDSR 获取所有配置 = new CMDSR(new byte[] { 0x5A, 0x5A }, new byte[] { 0xAA, 0xAA });
         public static CMDSR 保存所有配置 = new CMDSR(new byte[] { 0x5B, 0x5B }, new byte[] { 0xAB, 0xAB });
         public static CMDSR 复位CPU = new CMDSR(new byte[] { 0x57, 0x57 }, new byte[] { 0xA7, 0xA7 });
+        public static CMDSR 恢复出厂 = new CMDSR(new byte[] { 0x8F, 0x8F }, new byte[] { 0xDF, 0xDF });
+
+        /// <summary>
+        /// 字节数组转换为时间
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static string DateTimeFromBytes(byte[] bytes)
+        {
+            return $"20{bytes[0]:D2}年{bytes[1]:D2}月{bytes[2]:D2}日 {bytes[3]:D2}:{bytes[4]:D2}:{bytes[5]:D2}";
+        }
+
+        /// <summary>
+        /// 时间换换为字节数组
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static byte[] DateTimeToBytes(DateTime dt)
+        {
+            byte[] bytes = new byte[6];
+            bytes[0] = (byte)(dt.Year - 2000);
+            bytes[1] = (byte)(dt.Month);
+            bytes[2] = (byte)(dt.Day);
+            bytes[3] = (byte)(dt.Hour);
+            bytes[4] = (byte)(dt.Minute);
+            bytes[5] = (byte)(dt.Second);
+            return bytes;
+        }
+
+        /// <summary>
+        /// ip地址转换为字节数组
+        /// </summary>
+        /// <param name="ipstr"></param>
+        /// <returns></returns>
+        public static byte[] StringIpToBytes(string ipstr)
+        {
+            string[] ips = ipstr.Trim().Split('.');
+            byte[] tbytes = new byte[ips.Length];
+            for (int i = 0; i < tbytes.Length; i++)
+            {
+                tbytes[i] = BytesHelper.StrTobyte(ips[i], 10);
+            }
+            return tbytes.Swap01To10();
+        }
+
+        /// <summary>
+        /// mac地址转换为字节数组
+        /// </summary>
+        /// <param name="ipstr"></param>
+        /// <returns></returns>
+        public static byte[] StringMACToBytes(string ipstr)
+        {
+            string[] ips = ipstr.Trim().Split(':');
+            byte[] tbytes = new byte[ips.Length];
+            for (int i = 0; i < tbytes.Length; i++)
+            {
+                tbytes[i] = BytesHelper.StrTobyte(ips[i], 16);
+            }
+            return tbytes.Swap01To10();
+        }
     }
 
     public class SerialDeviceProc
