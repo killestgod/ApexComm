@@ -8,5 +8,8 @@
     <Setting Name="PWD" Type="System.String" Scope="User">
       <Value Profile="(Default)">12345678</Value>
     </Setting>
+    <Setting Name="Getcycle" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

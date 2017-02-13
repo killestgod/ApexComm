@@ -5,18 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApexComm.串口服务器"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="ApexComm.串口服务器.SerialDeviceWindow"
+         xmlns:WpfControlS="clr-namespace:WpfControlS;assembly=WpfControlS"
         mc:Ignorable="d"
-        Title="串口服务器配置工具" Height="598.633" Width="610.934" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" TextBlock.FontSize="13" Closing="Window_Closing">
+        Title="串口服务器配置工具" Height="610" Width="620" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" TextBlock.FontSize="13" Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary Source="/WpfControlS;Component/风格模板/TabControl/TabControlStyles1.xaml" />
+    </Window.Resources>
     <xctk:BusyIndicator Name="mybusy" BusyContent="命令执行中...">
-        <Canvas>
-            <Label x:Name="label" Content="当前装置:" Canvas.Left="10" Canvas.Top="10" />
-            <TabControl x:Name="tabControl" Height="448" Canvas.Left="10" Canvas.Top="36" Width="574">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="62" />
+            </Grid.RowDefinitions>
+
+            <TabControl x:Name="tabControl" Margin="5,5,5,8" Style="{DynamicResource TabControlStyle1}">
 
                 <TabItem Header="系统参数">
 
-                    <Canvas Background="#FFE5E5E5">
-                        <Label x:Name="label1" Content="装置名称：" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="17" Canvas.Top="11" />
-                        <TextBox x:Name="textBox_Name" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="242" Canvas.Left="87" Canvas.Top="11" LostFocus="textBox_Name_LostFocus" />
+                    <Canvas>
+                        <Label x:Name="label1" Foreground="Blue"  Content="装置名称：" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="17" Canvas.Top="11" FontWeight="Bold" />
+                        <TextBox x:Name="textBox_Name" Foreground="Blue"  HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="242" Canvas.Left="87" Canvas.Top="11" LostFocus="textBox_Name_LostFocus" />
                         <GroupBox x:Name="groupBox" Header="修改装置口令" Height="88" Canvas.Left="17" Canvas.Top="66" Width="332">
                             <Canvas>
                                 <Label x:Name="label2" Content="新口令:" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top" />
@@ -26,7 +34,7 @@
                             </Canvas>
                         </GroupBox>
                         <Border BorderBrush="Black" CornerRadius="5" BorderThickness="1" Canvas.Left="17" Canvas.Top="175" Padding="5">
-                            <StackPanel Name="sp_state" Width="441" Height="180" ></StackPanel>
+                            <StackPanel x:Name="sp_state" Width="441" Height="180" />
                         </Border>
                     </Canvas>
                 </TabItem>
@@ -73,14 +81,14 @@
                     </Canvas>
                 </TabItem>
             </TabControl>
-            <Button x:Name="button_write" Content="写入" Height="28" Canvas.Left="452" Canvas.Top="516" Width="58" Click="button_Click" />
-            <Button x:Name="button_close" Content="关闭" Canvas.Left="526" Canvas.Top="516" Width="58" Height="28" Click="button_close_Click" />
-            <Button x:Name="btn_read" Content="获取" Canvas.Left="9" Canvas.Top="521" Width="65" Click="btn_read_Click" />
-            <xctk:WatermarkPasswordBox x:Name="watermarkPasswordBox_pwd" MaxLength="8"  Watermark="12345678"  Canvas.Left="355" TextWrapping="Wrap" Text="WatermarkPasswordBox" Canvas.Top="518" Width="82" Password="12345678" AutoSelectBehavior="OnFocus" LostFocus="watermarkPasswordBox_pwd_LostFocus" />
-            <Label x:Name="label4" Content="口令" Canvas.Left="314" Canvas.Top="518" />
-            <Button x:Name="button_read" Content="读取配置" Canvas.Left="79" Canvas.Top="521" Width="66" Click="button_read_Click" />
-            <Button x:Name="button_save" Content="保存配置" Canvas.Left="150" Canvas.Top="521" Width="60" Click="button_save_Click" />
-            <Button x:Name="button_init" Content="恢复出厂" Canvas.Left="215" Canvas.Top="521" Width="60" Click="button_init_Click" />
-        </Canvas>
+            <Button x:Name="button_write" Content="写入" Click="button_Click" Margin="465,7,82,20" Grid.Row="1" />
+            <Button x:Name="button_close" Content="关闭" Click="button_close_Click" Margin="537,7,10,20" Grid.Row="1" />
+            <Button x:Name="btn_read" Content="获取" Click="btn_read_Click" Margin="9,12,531,20" Grid.Row="1" />
+            <xctk:WatermarkPasswordBox x:Name="watermarkPasswordBox_pwd" MaxLength="8"  Watermark="12345678" TextWrapping="Wrap" Text="WatermarkPasswordBox" Password="12345678" AutoSelectBehavior="OnFocus" LostFocus="watermarkPasswordBox_pwd_LostFocus" Margin="358,16,154,20" Grid.Row="1" />
+            <Label x:Name="label4" Content="口令" Margin="313,16,256,19" Grid.Row="1" />
+            <Button x:Name="button_read" Content="读取配置" Click="button_read_Click" Margin="88,12,451,20" Grid.Row="1" />
+            <Button x:Name="button_save" Content="保存配置" Click="button_save_Click" Margin="168,12,377,20" Grid.Row="1" />
+            <Button x:Name="button_init" Content="恢复出厂" Click="button_init_Click" Margin="242,12,303,20" Grid.Row="1" />
+        </Grid>
     </xctk:BusyIndicator>
 </Window>

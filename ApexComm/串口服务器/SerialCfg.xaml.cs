@@ -65,8 +65,8 @@ namespace ApexComm.串口服务器
             };
             comboBoxIsFrameMode.ItemsSource = new string[]
             {
-                "流方式--定时转发",
-                "帧方式--分帧转发"
+                "流方式 --定时转发",
+                "帧方式 --分帧转发"
             };
             textBox_NetIdleTTL.SetInputOnlyNumber();
             textBox_NetIdleTTL.MaxLength = 3;
@@ -388,7 +388,7 @@ namespace ApexComm.串口服务器
             {
                 bool t = cbbox.SelectedIndex == 1 ? true : false;
                 //停止位
-                BytesHelper.set_bit(Device.Struct_SS.comm_cfg_comStopBit[wi], wb, t);
+                Device.Struct_SS.comm_cfg_comStopBit[wi] = BytesHelper.set_bit(Device.Struct_SS.comm_cfg_comStopBit[wi], wb, t);
             }
         }
 
@@ -430,7 +430,7 @@ namespace ApexComm.串口服务器
                     Device.Struct_SS.comm_cfg_comParity[selectcomNum + mod] = (byte)comboBox1_Parity.SelectedIndex;
                     //停止位
                     bool t = comboBox1_StopBit.SelectedIndex == 1 ? true : false;
-                    BytesHelper.set_bit(Device.Struct_SS.comm_cfg_comStopBit[wi], wb, t);
+                    Device.Struct_SS.comm_cfg_comStopBit[wi] = BytesHelper.set_bit(Device.Struct_SS.comm_cfg_comStopBit[wi], wb, t);
                     //外部驱动接口类型
                     temp = BytesHelper.intToBytes(comboBox1_driverMode.SelectedIndex, 2);
 

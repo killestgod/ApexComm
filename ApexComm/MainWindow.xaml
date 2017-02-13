@@ -4,41 +4,109 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApexComm"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:WpfControlS="clr-namespace:WpfControlS;assembly=WpfControlS" x:Class="ApexComm.MainWindow"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
-    <xctk:BusyIndicator x:Name="busywait" BusyContent="搜索中...">
+        xmlns:ee="http://schemas.microsoft.com/expression/2010/effects"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:WpfControlS="clr-namespace:WpfControlS;assembly=WpfControlS" xmlns:串口服务器="clr-namespace:ApexComm.串口服务器" xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid" x:Class="ApexComm.MainWindow"
+    xmlns:gridHelper="clr-namespace:MyHelper;assembly=MyHelper"
+    mc:Ignorable="d"
+        Title="设备配置工具" Height="700" Width="1000" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+    <xctk:BusyIndicator x:Name="busywait" BusyContent="请稍后...">
 
-        <Grid ShowGridLines="True" x:Name="gird主框架">
+        <Grid ShowGridLines="False" x:Name="gird主框架"
+>
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFC2FAFD" Offset="0" />
+                    <GradientStop Color="White" Offset="1" />
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Border BorderBrush=" SlateGray" BorderThickness="0,0,0,2">
+                <Border.Effect>
+                    <BlurEffect Radius="1" />
+                </Border.Effect>
+                <Grid  x:Name="top">
+
+                    <TextBlock FontSize="36" Margin="31,5,5,5">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="SlateBlue" />
+                        </TextBlock.Effect>
+                        <TextBlock.Text>艾派克斯--上海宽域网络</TextBlock.Text>
+                    </TextBlock>
+                </Grid>
+            </Border>
             <Grid Grid.Row="1" ShowGridLines="True" x:Name="gird下半部分">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="300" />
+                    <ColumnDefinition Width="410" />
                 </Grid.ColumnDefinitions>
 
-                <Grid ShowGridLines="True" Height="612" Width="694" x:Name="grid_left">
+                <Grid ShowGridLines="False" Height="612"  x:Name="grid_left">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="89*" />
                         <RowDefinition Height="523*" />
                     </Grid.RowDefinitions>
-                    <ListView x:Name="listView" SelectionMode="Single"
-                              Grid.Row="1" View="{DynamicResource mygridview}" ItemContainerStyle="{DynamicResource ListViewItemStyle}" MouseDoubleClick="listView_MouseDoubleClick">
-                        <ListView.Background>
+                    <Canvas>
+
+                        <Button x:Name="btn_searchall" Content="搜索全部" HorizontalAlignment="Left" Height="48" Margin="62,19,0,0" VerticalAlignment="Top" Width="79" Click="btn_searchall_Click" />
+                        <Button x:Name="btn_searcharea" Content="搜索范围" Visibility="Hidden"  HorizontalAlignment="Left" Height="48" Margin="193,19,0,0" VerticalAlignment="Top" Width="79" Click="btn_searcharea_Click" />
+                        <Button x:Name="button_init" Content="全部恢复出厂" Visibility="Hidden"  Height="48" Canvas.Left="206" Canvas.Top="18" Width="93" Click="button_init_Click" />
+                    </Canvas>
+                    <xcdg:DataGridControl Grid.Row="1" x:Name="datagrid" MouseDoubleClick="datagrid_MouseDoubleClick" View="{DynamicResource myGroupHeard_no}" SelectionMode="Single" SelectionChanged="datagrid_SelectionChanged" AutoCreateColumns="False">
+                        <xcdg:DataGridControl.Template>
+                            <ControlTemplate TargetType="{x:Type xcdg:DataGridControl}">
+                                <Grid>
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                        <AdornerDecorator x:Name="PART_DragDropAdornerDecorator">
+                                            <xcdg:TableViewScrollViewer x:Name="PART_ScrollViewer" Padding="{TemplateBinding Padding}" RowSelectorPaneWidth="{Binding (xcdg:DataGridControl.DataGridContext).RowSelectorPaneWidth, RelativeSource={RelativeSource Self}}" ShowRowSelectorPane="{Binding (xcdg:DataGridControl.DataGridContext).ShowRowSelectorPane, RelativeSource={RelativeSource Self}}">
+                                                <xcdg:TableflowViewItemsHost />
+                                            </xcdg:TableViewScrollViewer>
+                                        </AdornerDecorator>
+                                    </Border>
+                                    <Grid x:Name="connectionStateGrid" HorizontalAlignment="Right" Height="30" Margin="0,0,25,25" VerticalAlignment="Bottom" Width="30">
+                                        <ContentPresenter x:Name="connectionStateLoadingContentPresenter" ContentTemplate="{Binding (xcdg:DataGridControl.DataGridContext).ConnectionStateLoadingGlyph, RelativeSource={RelativeSource Self}}" Content="{TemplateBinding ConnectionState}" Visibility="Collapsed" />
+                                        <ContentPresenter x:Name="connectionStateCommittingContentPresenter" ContentTemplate="{Binding (xcdg:DataGridControl.DataGridContext).ConnectionStateCommittingGlyph, RelativeSource={RelativeSource Self}}" Content="{TemplateBinding ConnectionState}" Visibility="Collapsed" />
+                                        <ContentPresenter x:Name="connectionStateErrorContentPresenter" ContentTemplate="{Binding (xcdg:DataGridControl.DataGridContext).ConnectionStateErrorGlyph, RelativeSource={RelativeSource Self}}" Content="{TemplateBinding ConnectionState}" Visibility="Collapsed" />
+                                    </Grid>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding (xcdg:DataGridControl.DataGridContext).IsConnectionStateGlyphEnabled, RelativeSource={RelativeSource Self}}" Value="False">
+                                        <Setter Property="Visibility" TargetName="connectionStateGrid" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding (xcdg:DataGridControl.DataGridContext).DataGridControl.ConnectionState, RelativeSource={RelativeSource Self}}" Value="Loading">
+                                        <Setter Property="Visibility" TargetName="connectionStateLoadingContentPresenter" Value="Visible" />
+                                        <Setter Property="Visibility" TargetName="connectionStateErrorContentPresenter" Value="Collapsed" />
+                                        <Setter Property="Visibility" TargetName="connectionStateCommittingContentPresenter" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding (xcdg:DataGridControl.DataGridContext).DataGridControl.ConnectionState, RelativeSource={RelativeSource Self}}" Value="Committing">
+                                        <Setter Property="Visibility" TargetName="connectionStateLoadingContentPresenter" Value="Collapsed" />
+                                        <Setter Property="Visibility" TargetName="connectionStateErrorContentPresenter" Value="Collapsed" />
+                                        <Setter Property="Visibility" TargetName="connectionStateCommittingContentPresenter" Value="Visible" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding (xcdg:DataGridControl.DataGridContext).DataGridControl.ConnectionState, RelativeSource={RelativeSource Self}}" Value="Error">
+                                        <Setter Property="Visibility" TargetName="connectionStateLoadingContentPresenter" Value="Collapsed" />
+                                        <Setter Property="Visibility" TargetName="connectionStateErrorContentPresenter" Value="Visible" />
+                                        <Setter Property="Visibility" TargetName="connectionStateCommittingContentPresenter" Value="Collapsed" />
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </xcdg:DataGridControl.Template>
+                        <xcdg:DataGridControl.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFC2FAFD" Offset="0" />
                                 <GradientStop Color="White" Offset="1" />
                             </LinearGradientBrush>
-                        </ListView.Background>
-                    </ListView>
-                    <Canvas>
-                        <Button x:Name="btn_searchall" Content="搜索全部" HorizontalAlignment="Left" Height="48" Margin="62,19,0,0" VerticalAlignment="Top" Width="79" Click="btn_searchall_Click" />
-                        <Button x:Name="btn_searcharea" Content="搜索范围" HorizontalAlignment="Left" Height="48" Margin="193,19,0,0" VerticalAlignment="Top" Width="79" />
-                    </Canvas>
+                        </xcdg:DataGridControl.Background>
+                        <xcdg:DataGridControl.Columns>
+                            <xcdg:Column Title="名称"  FieldName="Name" />
+                            <xcdg:Column Title="设备类型"  FieldName="TypeName" />
+                            <xcdg:Column Title="序列号"  FieldName="SN" Width="*" />
+                        </xcdg:DataGridControl.Columns>
+                    </xcdg:DataGridControl>
                 </Grid>
+                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" x:Name="DeviceCfgControl" />
             </Grid>
         </Grid>
     </xctk:BusyIndicator>

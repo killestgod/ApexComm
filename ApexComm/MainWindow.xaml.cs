@@ -17,6 +17,8 @@ using System.Windows.Shapes;
 using MyHelper;
 using System.Collections.ObjectModel;
 using System.Threading;
+using Xceed.Wpf.DataGrid;
+using ApexComm.串口服务器;
 
 namespace ApexComm
 {
@@ -47,8 +49,15 @@ namespace ApexComm
             //数据绑定
             Binding binding = new Binding();
             binding.Source = DeviceCollection;
-            listView.SetBinding(ListView.ItemsSourceProperty, binding);
+            datagrid.SetBinding(DataGridControl.ItemsSourceProperty, binding);
+            DefaultStyle = busywait.Style;
+            WindowHelper.ReSetWindowsSize(this);
         }
+
+        /// <summary>
+        /// yong
+        /// </summary>
+        private object lockobj = new object();
 
         /// <summary>
         /// UDP数据接收处理
@@ -73,8 +82,11 @@ namespace ApexComm
                 {
                     return;
                 }
+                lock (lockobj)
+                {
+                    ReceiveMsg(ReceiveByte, localendpoint, clientendip);
+                }
 
-                ReceiveMsg(ReceiveByte, localendpoint, clientendip);
                 LogMsg.log(clientendip.Address + " :   " + BytesHelper.ToHexString(ReceiveByte));
             }
             catch (ObjectDisposedException ex)
@@ -86,30 +98,18 @@ namespace ApexComm
             }
         }
 
+        private Style DefaultStyle;
+
         private void btn_searchall_Click(object sender, RoutedEventArgs e)
         {
+            //Style="{DynamicResource mybusy_scan}"
+
+            busywait.Style = FindResource("mybusy_scan") as Style;
             DeviceCollection.Clear();
             busywait.IsBusy = true;
             Task task = new Task(() =>
             {
-                Console.WriteLine(NetHelper.GetIPv4List().Count);
-                foreach (var ip in NetHelper.GetIPv4List())
-                {
-                    try
-                    {
-                        LogMsg.log("IP:" + ip.ToString());
-                        UdpClient tempudp = new UdpClient(new IPEndPoint(ip, UdpPort));
-                        tempudp.Client.ReceiveTimeout = 3000;
-                        tempudp.BeginReceive(ReceiveCallback, tempudp);
-                        udpclients.Add(tempudp);
-                    }
-                    catch (Exception ex)
-                    {
-                        // LogMsg.log_error(ip + "    udp初始化:" + ex.ToString());
-                    }
-                }
-
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     UdpBroadcast(CMDFactory.MakeCMDBytes(ApexComm.串口服务器.CMDCode.搜索设备.CMD_Send, new byte[] { }));
                     Thread.Sleep(1000);
@@ -122,11 +122,18 @@ namespace ApexComm
                 Dispatcher.Invoke(new Action(() =>
                 {
                     busywait.IsBusy = false;
+                    busywait.Style = DefaultStyle;
                     foreach (var udp in udpclients)
                     {
-                        udp.Close();
+                        try
+                        {
+                            udp.Close();
+                        }
+                        catch
+                        {
+                        }
                     }
-                    udpclients.Clear();
+                    //udpclients.Clear();
                     LogMsg.log("清空udp列表");
                 }));
             });
@@ -134,6 +141,25 @@ namespace ApexComm
 
         private void UdpBroadcast(byte[] cmd)
         {
+            if (udpclients.Count == 0)
+            {
+                foreach (var ip in NetHelper.GetIPv4List())
+                {
+                    try
+                    {
+                        LogMsg.log("IP:" + ip.ToString());
+                        UdpClient tempudp = new UdpClient(new IPEndPoint(ip, UdpPort));
+                        tempudp.Client.ReceiveTimeout = 3000;
+                        tempudp.BeginReceive(ReceiveCallback, tempudp);
+                        udpclients.Add(tempudp);
+                    }
+                    catch
+                    {
+                        // LogMsg.log_error(ip + "    udp初始化:" + ex.ToString());
+                    }
+                }
+            }
+
             foreach (var udp in udpclients)
             {
                 try
@@ -142,37 +168,79 @@ namespace ApexComm
                 }
                 catch (Exception ex)
                 {
-                    LogMsg.log_error("UDP广播:" + ex.ToString());
-                }
-            }
-        }
-
-        private void listView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            Console.WriteLine(listView.SelectedItems.ToString());
-            if (listView.SelectedValue != null)
-            {
-                if (listView.SelectedValue is SerialDevice)
-                {
-                    SerialDevice sd = listView.SelectedValue as SerialDevice;
-                    if (sd.SVer != "Ver 04.2D")
-                    {
-                        MessageBox.Show(this, "此设备的程序版本不兼容,只支持 Ver04.2D");
-                        return;
-                    }
-                    this.Hide();
-                    ApexComm.串口服务器.SerialDeviceWindow sw = new ApexComm.串口服务器.SerialDeviceWindow();
-                    sw.MyDevice = sd;
-                    sw.Owner = this;
-                    sw.ShowDialog();
-
-                    this.Show();
-                    btn_searchall_Click(sender, e);
+                    LogMsg.log_error("UDP广播出错:" + ex.ToString());
                 }
             }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+        }
+
+        private void datagrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine(datagrid.SelectedItem.ToString());
+
+            if (datagrid.SelectedItem != null)
+            {
+                if (datagrid.SelectedItem is SerialDevice)
+                {
+                    SerialDevice sd = datagrid.SelectedItem as SerialDevice;
+                    Showcfg(sd);
+                }
+            }
+        }
+
+        private void datagrid_SelectionChanged(object sender, DataGridSelectionChangedEventArgs e)
+        {
+            if (datagrid.SelectedItem != null)
+            {
+                if (datagrid.SelectedItem is SerialDevice)
+                {
+                    SerialDevice sd = datagrid.SelectedItem as SerialDevice;
+                    DeviceCfgControl.Content = null;
+                    SerialDeviceControl sdControl = new SerialDeviceControl();
+                    DeviceCfgControl.Content = sdControl;
+                    sdControl.ShowCfg = Showcfg;
+                    sdControl.mainWindow = this;
+                    sdControl.SetDevice(sd);
+                }
+            }
+            else
+            {
+                DeviceCfgControl.Content = null;
+            }
+        }
+
+        public void Showcfg(SerialDevice sd)
+        {
+            if (sd.SVer != "Ver 04.2D")
+            {
+                MessageBox.Show(this, "此设备的程序版本不兼容,只支持 Ver04.2D");
+                return;
+            }
+            this.Hide();
+            ApexComm.串口服务器.SerialDeviceWindow sw = new ApexComm.串口服务器.SerialDeviceWindow();
+            sw.MyDevice = sd;
+            sw.Owner = this;
+            sw.ShowDialog();
+
+            this.Show();
+            btn_searchall_Click(null, null);
+        }
+
+        #region 子控件的udp通讯
+
+        ////
+
+        #endregion 子控件的udp通讯
+
+        private void btn_searcharea_Click(object sender, RoutedEventArgs e)
+        {
+            // busywait.IsBusy = true;
+        }
+
+        private void button_init_Click(object sender, RoutedEventArgs e)
         {
         }
     }

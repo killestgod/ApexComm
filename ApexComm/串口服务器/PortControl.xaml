@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="ApexComm.串口服务器.PortControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ApexComm.串口服务器"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="130" TextBlock.FontSize="13">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Label}">
+            <Setter  Property="Margin" Value="0,0,0,-3"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="9">
+        <Border.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF77ECEC" Offset="0.515" />
+                <GradientStop Color="White" Offset="1" />
+                <GradientStop Color="#FFFFFCFB" />
+            </LinearGradientBrush>
+        </Border.Background>
+        <StackPanel>
+            <Label  x:Name="label_name" Content="port0" HorizontalAlignment="Center"  VerticalAlignment="Top" FontWeight="Bold" />
+            <Label   x:Name="label_COMTotalSend" Content="0" HorizontalAlignment="Left"  VerticalAlignment="Top" />
+            <Label   x:Name="label_COMTotalReceive" Content="0" HorizontalAlignment="Left"  VerticalAlignment="Top" />
+            <Label   x:Name="label_Net0" Content="网口A" HorizontalAlignment="Center"  VerticalAlignment="Top" Foreground="Blue" />
+            <Label   x:Name="label_Net0TCPStatus" Content="tcpA" HorizontalAlignment="Left"  VerticalAlignment="Top" />
+            <Label x:Name="label_Net0TotalReceive" Content="0" HorizontalAlignment="Left"  VerticalAlignment="Top" />
+            <Label x:Name="label_Net0TotalSend" Content="0" HorizontalAlignment="Left"  VerticalAlignment="Top" />
+            <Label x:Name="label_Net1" Content="网口B" HorizontalAlignment="Center"  VerticalAlignment="Top" Foreground="Blue" />
+            <Label x:Name="label_Net1TCPStatus" Content="tcpB" HorizontalAlignment="Left"  VerticalAlignment="Top" />
+            <Label x:Name="label_Net1TotalReceive" Content="0" HorizontalAlignment="Left"  VerticalAlignment="Top" />
+            <Label x:Name="label_Net1TotalSend" Content="0" HorizontalAlignment="Left"  VerticalAlignment="Top" />
+        </StackPanel>
+    </Border>
+</UserControl>

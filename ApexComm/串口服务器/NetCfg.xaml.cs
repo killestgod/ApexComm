@@ -67,6 +67,24 @@ namespace ApexComm.串口服务器
             }
         }
 
+        private void SetLimitIpMode(int num)
+        {
+            switch (num)
+            {
+                case 0:
+                    comboBoxLimitIPMode.SelectedIndex = 0;
+                    break;
+
+                case 0xA5A5:
+                    comboBoxLimitIPMode.SelectedIndex = 1;
+                    break;
+
+                case 0x5A5A:
+                    comboBoxLimitIPMode.SelectedIndex = 2;
+                    break;
+            }
+        }
+
         /// <summary>
         /// 显示刷新
         /// </summary>
@@ -77,7 +95,9 @@ namespace ApexComm.串口服务器
             byte[] tbytes;
             if (NetNum == 0)
             {
-                comboBoxLimitIPMode.SelectedIndex = Device.Struct_SS.Net0_cfg_LimitIPMode.bytesToInt(0, 2);
+                int num = Device.Struct_SS.Net0_cfg_LimitIPMode.bytesToInt(0, 2);
+                SetLimitIpMode(num);
+                //comboBoxLimitIPMode.SelectedIndex = Device.Struct_SS.Net0_cfg_LimitIPMode.bytesToInt(0, 2);
                 for (int i = 0; i < 6; i++)
                 {
                     tbytes = Device.Struct_SS.Net0_cfg_utLimitIP.CloneRange(i * 4, 4);
@@ -105,12 +125,14 @@ namespace ApexComm.串口服务器
 
                 comboBox_IsUseUDP.SelectedIndex = Device.Struct_SS.Net0IsUdpProtocol.bytesToInt(0, 2) == 0 ? 0 : 1;
                 comboBox_mode.SelectedIndex = Device.Struct_SS.Net0TcpMode.bytesToInt(0, 2);
-                //udp 所有都发送到指定端口
-                checkBox_portAll.IsChecked = Device.Struct_SS.Net0UdpComPortAllSame.bytesToInt(0, 2) == 1 ? true : false;
+                //udp 所有都发送到指定端口 特殊为真FFFF
+                checkBox_portAll.IsChecked = Device.Struct_SS.Net0UdpComPortAllSame.bytesToInt(0, 2) == 0 ? false : true;
             }
             else
             {
-                comboBoxLimitIPMode.SelectedIndex = Device.Struct_SS.Net1_cfg_LimitIPMode.bytesToInt(0, 2);
+                int num = Device.Struct_SS.Net1_cfg_LimitIPMode.bytesToInt(0, 2);
+                SetLimitIpMode(num);
+                //comboBoxLimitIPMode.SelectedIndex = Device.Struct_SS.Net1_cfg_LimitIPMode.bytesToInt(0, 2);
                 for (int i = 0; i < 6; i++)
                 {
                     tbytes = Device.Struct_SS.Net1_cfg_utLimitIP.CloneRange(i * 4, 4);
@@ -136,7 +158,7 @@ namespace ApexComm.串口服务器
                 comboBox_IsUseUDP.SelectedIndex = Device.Struct_SS.Net1IsUdpProtocol.bytesToInt(0, 2) == 0 ? 0 : 1;
                 comboBox_mode.SelectedIndex = Device.Struct_SS.Net1TcpMode.bytesToInt(0, 2);
                 //udp 所有都发送到指定端口
-                checkBox_portAll.IsChecked = Device.Struct_SS.Net1UdpComPortAllSame.bytesToInt(0, 2) == 1 ? true : false;
+                checkBox_portAll.IsChecked = Device.Struct_SS.Net1UdpComPortAllSame.bytesToInt(0, 2) == 0 ? false : true;
             }
             //sd.Struct_SS.net_cfg_LimitIPMode.
         }
@@ -258,8 +280,23 @@ namespace ApexComm.串口服务器
             {
                 groupBox_LimitIPMode.Visibility = Visibility.Visible;
             }
+            UInt16 num = 0;
+            switch (selectindex)
+            {
+                case 0:
+                    num = 0;
+                    break;
+
+                case 1:
+                    num = 0xA5A5;
+                    break;
+
+                case 2:
+                    num = 0x5A5A;
+                    break;
+            }
             //限制模式
-            SSSetValue($"Net{NetNum}_cfg_LimitIPMode", BytesHelper.intToBytes(selectindex, 2));
+            SSSetValue($"Net{NetNum}_cfg_LimitIPMode", BytesHelper.intToBytes(num, 2));
         }
 
         private void Tb_LostFocus(object sender, RoutedEventArgs e)
@@ -363,7 +400,7 @@ namespace ApexComm.串口服务器
         private void checkBox_portAll_Click(object sender, RoutedEventArgs e)
         {
             //udp 所有都发送到指定端口
-            SSSetValue($"Net{NetNum}UdpComPortAllSame", BytesHelper.intToBytes(checkBox_portAll.IsChecked.Value ? 1 : 0, 2));
+            SSSetValue($"Net{NetNum}UdpComPortAllSame", BytesHelper.intToBytes(checkBox_portAll.IsChecked.Value ? 65535 : 0, 2));
         }
 
         private void comboBox_mode_SelectionChanged(object sender, SelectionChangedEventArgs e)

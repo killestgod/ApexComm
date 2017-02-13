@@ -263,4 +263,158 @@ namespace ApexComm
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
         public byte[] end;
     }
+
+    /// <summary>
+    /// 共932 ==22+ 904(正文)+6
+    /// </summary>
+    public struct SerialDevice_Monitor_Struct
+    {
+        //EB 90 EB 90
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+        public byte[] head;
+
+        // 16 文本
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+        public byte[] sn;
+
+        //'   7. 上送装置工作状态（上行）
+        //'      20   A6H       报文命令码
+        //'      21   A6H
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public byte[] cmdcode;
+
+        //'      22   88H       报文正文长度: 8 + 64 * 2 + 128 * 2 + 128 * 4 = 904 = 0x388
+        //'      23   03H
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public byte[] len;
+
+        //'      24   FLAG1-L   异常状态（参考: 装置异常工作状态定义）
+        //'      25   FLAG1-H   异常状态（参考: 装置异常工作状态定义）
+        //'      26   FLAG2-L   异常状态（参考: 装置异常工作状态定义）, 备用
+        //'      27   FLAG2-H   异常状态（参考: 装置异常工作状态定义）, 备用
+        //stPowerPortInforInLib(iCurrCmdPowerPortIndex).bStatusFlag(i) = bRecvFrameBuffer(24 + i) ' 装置异常标志信息
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+        public byte[] StatusFlag;
+
+        //'      28   ComCount  串口数n
+        //'      29   0
+        public UInt16 ComCount;
+
+        //'      30   NetCount  网口数
+        //'      31   0
+        public UInt16 NetCount;
+
+        //'
+        //'      基本字节偏移: 16, 变量: COM * 2, 字节数共: 64
+        //'      ========================================
+        //'      32   SckA-01L  COM1的TCP链接状态L（A网口）  该部分共: ComCount×2字节
+        //'      33   SckA-01H  COM1的TCP链接状态H（A网口）
+        //'      34   ...
+        //'      35   ...
+        //'
+        //'      基本字节偏移: 16 + 32*2 = 80, 变量: COM * 2, 字节数共: 64
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public byte[] Net0TCPStatus;
+
+        //'      ====================================================
+        //'      96   SckB-01L  COM1的TCP链接状态L（B网口）  若为双网口, 该部分共: ComCount * 2字节; 单网口则不存在
+        //'      97   SckB-01H  COM1的TCP链接状态H（B网口）
+        //'      98   ...
+        //'      99   ...
+        //'
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public byte[] Net1TCPStatus;
+
+        //'      基本字节偏移: 80 + 32*2 = 144, 变量: COM * 4, 字节数共: 128
+        //'      ======================================================
+        //'      160   Com-01LL  COM1实际接收累计字节数（4字节）  该部分共: ComCount×4字节
+        //'      161   Com-01L
+        //'      162   Com-01H
+        //'      163   Com-01HH
+        //'      164   ...
+        //'      165   ...
+        //'      166   ...
+        //'      167   ...
+        //'
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
+        public byte[] COMTotalReceive;
+
+        //'      基本字节偏移: 144 + 32*4 = 272, 变量: COM * 4, 字节数共: 128
+        //'      =======================================================
+        //'      288   Com-01LL  COM1实际发送累计字节数（4字节）  该部分共: ComCount×4字节
+        //'      289   Com-01L
+        //'      290   Com-01H
+        //'      291   Com-01HH
+        //'      292   ...
+        //'      293   ...
+        //'      294   ...
+        //'      295   ...
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
+        public byte[] COMTotalSend;
+
+        //'      基本字节偏移: 272 + 32*4 = 400, 变量: COM * 4, 字节数共: 128
+        //'      ========================================================
+        //'      416   SckA-01LL 网口A实际接收的累计字节数（4字节）  该部分共: ComCount * 4字节
+        //'      417   SckA-01L
+        //'      418   SckA-01H
+        //'      419   SckA-01HH
+        //'      420   ...
+        //'      421   ...
+        //'      422   ...
+        //'      423   ...
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
+        public byte[] Net0TotalReceive;
+
+        //'      基本字节偏移: 400 + 32*4 = 528, 变量: COM * 4, 字节数共: 128
+        //'      ========================================================
+        //'      544   SckB-01LL 网口B实际接收的累计字节数（4字节）  该部分共: ComCount * 4字节
+        //'      545   SckB-01L
+        //'      546   SckB-01H
+        //'      547   SckB-01HH
+        //'      548   ...
+        //'      549   ...
+        //'      550   ...
+        //'      551   ...
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
+        public byte[] Net1TotalReceive;
+
+        //'      基本字节偏移: 528 + 32*4 = 656, 变量: COM * 4, 字节数共: 128
+        //'      ========================================================
+        //'      672   SckA-01LL 网口A实际发送的累计字节数（4字节）  该部分共: ComCount * 4字节
+        //'      673   SckA-01L
+        //'      674   SckA-01H
+        //'      675   SckA-01HH
+        //'      676   ...
+        //'      677   ...
+        //'      678   ...
+        //'      679   ...
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
+        public byte[] Net0TotalSend;
+
+        //'      基本字节偏移: 656 + 32*4 = 784, 变量: COM * 4, 字节数共: 128
+        //'      ========================================================
+        //'      800   SckB-01LL 网口B实际发送的累计字节数（4字节）  该部分共: ComCount * 4字节
+        //'      801   SckB-01L
+        //'      802   SckB-01H
+        //'      803   SckB-01HH
+        //'      804   ...
+        //'      805   ...
+        //'      806   ...
+        //'      807   ...
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
+        public byte[] Net1TotalSend;
+
+        //'      ------------------------------
+        //'      累计字节偏移: 784 + 32 * 4 = 912
+        //'      ------------------------------
+
+        //'      22   88H       报文正文长度: 8 + 64 * 2 + 128 * 2 + 128 * 4 = 904 = 0x388
+        //'      23   03H
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public byte[] xor;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public byte[] end;
+    }
 }

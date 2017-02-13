@@ -7,10 +7,33 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="ApexComm.Window1"
         mc:Ignorable="d"
         Title="Window1" Height="300" Width="300">
-    <Canvas>
-        <Border BorderBrush="Black" BorderThickness="1"  Canvas.Left="71" Canvas.Top="68">
-            <Button x:Name="button" Width="35"  Height="47" Content="5555555111" />
-        </Border>
-        <xctk:MaskedTextBox x:Name="maskedTextBox" Canvas.Left="82" TextWrapping="Wrap" Text="MaskedTextBox" Canvas.Top="141" />
+    <Window.Resources>
+        <Storyboard x:Key="OnLoaded1" RepeatBehavior="Forever">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="image_scan">
+                <EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="360" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource OnLoaded1}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="image_scan">
+            <BeginStoryboard Storyboard="{StaticResource OnLoaded1}"/>
+        </EventTrigger>
+    </Window.Triggers>
+    <Canvas Height="300" Width="300"  Name="canvas">
+        <Button x:Name="button" Content="Button" Canvas.Left="41" Canvas.Top="44" Width="75" />
+        <Image x:Name="image"  Source="风格模板/bg.png" ClipToBounds="True"  Width="300" Stretch="UniformToFill" />
+        <Image x:Name="image_scan"  Source="风格模板/scan.png " ClipToBounds="True"  Width="300" RenderTransformOrigin="0.5,0.5" Stretch="UniformToFill">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
     </Canvas>
 </Window>

@@ -90,5 +90,17 @@ namespace ApexComm.Properties {
                 this["PWD"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int Getcycle {
+            get {
+                return ((int)(this["Getcycle"]));
+            }
+            set {
+                this["Getcycle"] = value;
+            }
+        }
     }
 }

@@ -286,6 +286,16 @@ namespace ApexComm.串口服务器
                 return;
             }
 
+            string pwd1 = watermarkPasswordBox_newpwd.Password;
+            string pwd2 = watermarkPasswordBox_newpwdre.Password;
+
+            if (!string.IsNullOrEmpty(pwd1) && pwd1.Equals(pwd2))
+            {
+                MyDevice.Struct_SS.DevicePass = CMDFactory.ConvertStrTobytes(pwd1, 8);
+                watermarkPasswordBox_newpwd.Password = "";
+                watermarkPasswordBox_newpwdre.Password = "";
+            }
+
             //结构体正文部分的xor校验
             byte[] ssbytes = StructWithBytes.StructToBytes(MyDevice.Struct_SS);
             byte[] xorbytes = CMDFactory.Xor(ssbytes, 26, 1230);
@@ -416,7 +426,7 @@ namespace ApexComm.串口服务器
 
             if (!string.IsNullOrEmpty(pwd1) && pwd1.Equals(pwd2))
             {
-                MyDevice.Struct_SS.DevicePass = CMDFactory.ConvertStrTobytes(pwd1, 8);
+                //MyDevice.Struct_SS.DevicePass = CMDFactory.ConvertStrTobytes(pwd1, 8);
             }
             else
             {
@@ -544,6 +554,7 @@ namespace ApexComm.串口服务器
 
             if (openFileDialog1.ShowDialog() == true)
             {
+                WaitingCMD = CMDCode.保存所有配置.CMD_Send;
                 ReceiveMsg(FileHelper.ReadBytesFromFile(openFileDialog1.FileName));
             }
         }
@@ -551,6 +562,10 @@ namespace ApexComm.串口服务器
         private void button_close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
         }
     }
 }

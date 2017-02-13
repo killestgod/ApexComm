@@ -20,6 +20,8 @@ namespace ApexComm.串口服务器
         public static CMDSR 保存所有配置 = new CMDSR(new byte[] { 0x5B, 0x5B }, new byte[] { 0xAB, 0xAB });
         public static CMDSR 复位CPU = new CMDSR(new byte[] { 0x57, 0x57 }, new byte[] { 0xA7, 0xA7 });
         public static CMDSR 恢复出厂 = new CMDSR(new byte[] { 0x8F, 0x8F }, new byte[] { 0xDF, 0xDF });
+        public static CMDSR 激活装置 = new CMDSR(new byte[] { 0x82, 0x82 }, new byte[] { 0xD2, 0xD2 });
+        public static CMDSR 工作状态 = new CMDSR(new byte[] { 0x56, 0x56 }, new byte[] { 0xA6, 0xa6 });
 
         /// <summary>
         /// 字节数组转换为时间
